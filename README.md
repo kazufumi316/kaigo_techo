@@ -318,3 +318,50 @@
 確認しながらの導入になるので開発完了まで時間がかかる可能性があります。
 
 ---
+
+### ER図
+[![Image from Gyazo](https://i.gyazo.com/949da0a5a6360e616607af6051f230b3.png)](https://gyazo.com/949da0a5a6360e616607af6051f230b3)
+
+### テーブル詳細
+#### ：users
+- name : string / 氏名(ユーザー)
+- email : string / ログイン用メールアドレス(ユニーク制約)
+- tel_number : string / ログイン用電話番号(ユニーク制約) 本リリース実装予定
+- encrypted_password : string / ログイン用パスワード
+- created_at : timestamp / 作成日
+- updated_at : timestamp / 更新日
+
+#### ：care_users
+- family_id : integer
+- name : string / 氏名(要介護者)
+- birthday : date / 生年月日
+- blood_type : string / 血液型(列挙型で選択)
+- medical_condition_1 : string / 病名-1(文字数制限 : 50)
+- medical_condition_2 : string / 病名-2(文字数制限 : 50)
+- medical_condition_3 : string / 病名-3(文字数制限 : 50)
+- created_at : timestamp / 作成日
+- updated_at : timestamp / 更新日
+
+#### ：family_members(中間テーブル)
+- user_id : integer / FK1
+- family_id : integer / FK2
+- role : integer / main(主介護者) family(家族)判別
+- created_at : timestamp / 作成日
+- updated_at : timestamp / 更新日
+
+#### : families
+- family_name : 家族名
+- created_at : timestamp / 作成日
+- updated_at : timestamp / 更新日
+
+#### ：care_records
+- user_id : integer / FK1
+- care_user_id : integer / FK2
+- health_status : integer / 体調(良い・変わらない・悪い)
+- appetite : integer / 食欲(ある・変わらない・ない)
+- sleep_quality : integer / 睡眠(多い、変わらない、少ない)
+- memo : string / 特記事項(文字数制限 : 255)
+- created_at : timestamp / 作成日
+- updated_at : timestamp / 更新日
+
+---
