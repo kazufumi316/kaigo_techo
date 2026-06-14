@@ -20,6 +20,18 @@ services:
     volumes: # ファイルの共有化の指定
       - postgres_data:/var/lib/postgresql/data
 
+  css:
+    build: .
+    command: bash -c "bundle exec rails tailwindcss:watch"
+    volumes:
+      - .:/app
+      - bundle_data:/usr/local/bundle
+    depends_on:
+      - web
+    tty: true
+    stdin_open: true
+
 volumes:
   logs:
   postgres_data:
+  bundle_data:
