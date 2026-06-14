@@ -1,0 +1,37 @@
+services:
+  web:
+    build: . # 起動コマンド
+    env_file: # ファイルの指定
+      - .env
+    ports: # ポートの指定
+      - "3000:3000"
+    volumes: # ファイルの共有化の指定
+      - .:/app
+      - logs:/var/log/myapp
+    depends_on: # データベースを先に起動
+      - db
+
+  db:
+    image: postgres:17 # データベースの指定
+    env_file: # ファイルの指定
+      -  .env
+    ports: # データベースのポート指定(デフォルトのもの)
+      - "5432:5432"
+    volumes: # ファイルの共有化の指定
+      - postgres_data:/var/lib/postgresql/data
+
+  css:
+    build: .
+    command: bash -c "bundle exec rails tailwindcss:watch"
+    volumes:
+      - .:/app
+      - bundle_data:/usr/local/bundle
+    depends_on:
+      - web
+    tty: true
+    stdin_open: true
+
+volumes:
+  logs:
+  postgres_data:
+  bundle_data:
