@@ -28,4 +28,4 @@ ENV APP_ENV ${APP_ENV} \
 EXPOSE 3000
 
 # サーバー起動コマンド
-CMD [ "rails", "server", "-b", "0.0.0.0" ]
+CMD [ "sh", "-c", "bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0" ]
