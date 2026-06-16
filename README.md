@@ -295,13 +295,16 @@
   - 無料枠にて実施でき、デプロイが簡単なため
 - 使用予定ライブラリ
   - (ユーザー登録)
-      - gem Devise：新規登録、ログイン機能、ログアウト
+      - gem devise：新規登録、ログイン機能、ログアウト
+      - gem devise-i18n：devise機能日本語化
   - (UI関連)
     - gem simple_calendar：記録確認ページでのカレンダー使用のため
     - gem i18n：カレンダー機能の日本語設定のため
   - (テスト駆動)
-    - rspec-rails：Rspecテスト導入のため
-    - letter_opener_web：パスワードリセット確認のため
+    - gem rspec-rails：Rspecテスト導入のため
+    - gem factory-bot：rspecテスト実行のため
+    - gem faker：factory-botでアカウントテスト作成のため
+    - gem letter_opener_web：パスワードリセット確認のため
 
 ### 10-2.キャッチアップ不足の懸念
 

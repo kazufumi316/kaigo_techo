@@ -10,6 +10,7 @@ services:
       - logs:/var/log/myapp
     depends_on: # データベースを先に起動
       - db
+    command: bundle exec rails s -b '0.0.0.0'
 
   db:
     image: postgres:17 # データベースの指定
