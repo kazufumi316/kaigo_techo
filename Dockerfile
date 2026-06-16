@@ -20,9 +20,9 @@ RUN bundle install
 COPY . .
 
 # 環境変数
-ARG APP_ENV=production
+ARG APP_ENV=development
 ENV APP_ENV ${APP_ENV} \
-    RAILS_ENV=production
+    RAILS_ENV=development
 
 # ポート公開
 EXPOSE 3000
