@@ -55,6 +55,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
@@ -75,3 +76,6 @@ group :test do
 end
 
 gem "tailwindcss-rails", "~> 4.4"
+
+gem "devise", "~> 5.0"
+gem "devise-i18n"
