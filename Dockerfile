@@ -26,8 +26,10 @@ ARG APP_ENV=production
 ENV APP_ENV ${APP_ENV} \
     RAILS_ENV=production
 
+RUN bundle exec rails assets:precompile
+
 # ポート公開
 EXPOSE 3000
 
 # サーバー起動コマンド
-CMD [ "rails", "server", "-b", "0.0.0.0" ]
+CMD [ "bash", "-c", "bundle exec rails db:migrate && bundle exec puma -C config/puma.rb" ]
