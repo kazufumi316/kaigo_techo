@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+
   describe '#create' do
     it "アカウント登録ができること" do
       user = build(:user)
@@ -12,8 +13,8 @@ RSpec.describe User, type: :model do
     end
   end
 
-    describe '#create' do
-    it "バリテーションエラーが出ること" do
+  describe '#create' do
+    it "アカウント登録失敗でバリテーションエラーが出ること" do
       user = build(:user, name: nil, tel_number: nil, email: nil, password: nil)
       user.valid?
       expect(user.errors[:name]).to include("を入力してください")
