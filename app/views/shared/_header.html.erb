@@ -1,0 +1,10 @@
+<header class="bg-orange-50 w-full">
+  <nav class="max-w-7xl mx-auto flex justify-between items-center h-16 px-4">
+    <div class="flex items-center">
+      <% link_target = user_signed_in? ? homes_path : root_path %>
+      <%= link_to link_target do %>
+        <%= image_tag "icon.png" , class: "w-16 h-16 object-contain", alt: "おやこうこうかん日記ロゴ" %>
+      <% end %>
+    </div>
+  </nav>
+</header>
