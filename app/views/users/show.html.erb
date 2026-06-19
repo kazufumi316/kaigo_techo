@@ -1,0 +1,32 @@
+<div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
+  <div class="text-4xl font-bold mb-8">
+    <h1>マイページ</h1>
+  </div>
+
+  <div class="w-full max-w-md text-3xl text-gray-700">
+
+    <div class="field mb-5">
+      <p class="font-bold mb-1"><%= User.human_attribute_name(:name) %></p>
+      <p class="font-bold w-full p-3"><%= current_user.name %></p>
+    </div>
+
+    <div class="field mb-5">
+      <p class="font-bold mb-1"><%= User.human_attribute_name(:tel_number) %></p>
+      <p class="font-bold w-full p-3"><%= current_user.tel_number %></p>
+    </div>
+
+    <div class="field mb-5">
+      <p class="font-bold mb-1"><%= User.human_attribute_name(:email) %></p>
+      <p class="font-bold w-full p-3 break-all"><%= current_user.email %></p>
+    </div>
+  </div>
+
+  <div class="flex flex-col justify-center items-center gap-4">
+    <div class="actions w-full">
+      <%= link_to "編集", edit_user_registration_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
+
+      <%= link_to "戻る", homes_path, class: "mt-4 w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-orange-300 font-bold rounded-lg" %>
+    </div>
+  </div>
+</div>
+
