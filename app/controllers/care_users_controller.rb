@@ -10,17 +10,20 @@ class CareUsersController < ApplicationController
 
   def create
     @care_user = CareUser.new(care_user_params)
+    family = @care_user.build_family(family_name: @care_user.name)
+    family.family_members.build(user_id: current_user.id, role: "main")
     if @care_user.save
-      redirect_to homes_path, success: t('要介護家族の登録に成功しました')
+      redirect_to care_users_path, success: '要介護家族の登録に成功しました'
     else
-      flash.now[:danger] = t('要介護家族の登録に失敗しました')
+      flash.now[:danger] = '要介護家族の登録に失敗しました'
       render :new, status: :unprocessable_entity
     end
   end
 
   def index
     if current_user.families.exists?
-      @care_users = current_user.families.first.care_users
+      family_ids = current_user.family_members.pluck(:family_id)
+      @care_users = CareUser.where(family_id: family_ids)
     else
       @care_users = []
     end
@@ -35,11 +38,7 @@ class CareUsersController < ApplicationController
       :blood_type, 
       :medical_condition_1, 
       :medical_condition_2, 
-      :medical_condition_3,
-      family_attributes: [
-        :family_name,
-        family_members_attributes: [:user_id, :role]
-      ]
+      :medical_condition_3
     )
   end
 end

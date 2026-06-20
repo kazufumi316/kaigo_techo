@@ -1,7 +1,7 @@
 class CareUser < ApplicationRecord
   belongs_to :family
   has_many :care_records
-  
+
   accepts_nested_attributes_for :family
 
   validates :name, presence: true
@@ -10,5 +10,5 @@ class CareUser < ApplicationRecord
   validates :medical_condition_2, length: { maximum: 50 }
   validates :medical_condition_3, length: { maximum: 50 }
 
-  enum :blood_type, { unknown: 0, a: 1, b: 2, o: 3, ab: 4 }
+  enum :blood_type, { 不明: 0, A型: 1, B型: 2, O型: 3, AB型: 4 }
 end
