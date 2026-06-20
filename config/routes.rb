@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :homes, only: [:index]
   resources :users, only: [:show]
+  resources :care_users, only: [:index]
 
   # Defines the root path route ("/")
   # root "articles#index"
