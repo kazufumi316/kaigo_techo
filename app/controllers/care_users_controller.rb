@@ -4,12 +4,12 @@ class CareUsersController < ApplicationController
   
   def new
     @care_user = CareUser.new
+    @family = @care_user.build_family
+    @family.family_members.build(user: current_user, role: :main)
   end
 
   def create
-    @family_member = current_user.family_member
-    @family = @family_member.family
-    @care_user = @family.care_users.build(care_user_params)
+    @care_user = CareUser.new(care_user_params)
     if @care_user.save
       redirect_to homes_path, success: t('要介護家族の登録に成功しました')
     else
@@ -21,7 +21,17 @@ class CareUsersController < ApplicationController
   private
 
   def care_user_params
-    params.require(:care_user).permit(:name, :birthday, :blood_type, :medical_condition_1, :medical_condition_2, :medical_condition_3)
+    params.require(:care_user).permit(
+      :name, 
+      :birthday, 
+      :blood_type, 
+      :medical_condition_1, 
+      :medical_condition_2, 
+      :medical_condition_3,
+      family_attributes: [
+        :family_name,
+        family_members_attributes: [:user_id, :role]
+      ]
+    )
   end
-
 end

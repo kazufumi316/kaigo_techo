@@ -1,6 +1,8 @@
 class CareUser < ApplicationRecord
   belongs_to :family
   has_many :care_records
+  
+  accepts_nested_attributes_for :family
 
   validates :name, presence: true
   validates :birthday, presence: true
