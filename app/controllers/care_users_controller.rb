@@ -18,6 +18,14 @@ class CareUsersController < ApplicationController
     end
   end
 
+  def index
+    if current_user.families.exists?
+      @care_users = current_user.families.first.care_users
+    else
+      @care_users = []
+    end
+  end
+
   private
 
   def care_user_params
