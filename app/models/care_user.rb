@@ -1,6 +1,6 @@
 class CareUser < ApplicationRecord
   belongs_to :family
-  has_many :care_records
+  has_many :care_records, dependent: :destroy
 
   accepts_nested_attributes_for :family
 

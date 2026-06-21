@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_20_025313) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_21_061907) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "care_records", force: :cascade do |t|
+    t.integer "appetite", null: false
+    t.bigint "care_user_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "health_status", null: false
+    t.string "memo"
+    t.integer "sleep_quality", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["care_user_id"], name: "index_care_records_on_care_user_id"
+    t.index ["user_id"], name: "index_care_records_on_user_id"
+  end
 
   create_table "care_users", force: :cascade do |t|
     t.date "birthday", null: false
@@ -58,6 +71,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_20_025313) do
     t.index ["tel_number"], name: "index_users_on_tel_number", unique: true
   end
 
+  add_foreign_key "care_records", "care_users"
+  add_foreign_key "care_records", "users"
   add_foreign_key "care_users", "families"
   add_foreign_key "family_members", "families"
   add_foreign_key "family_members", "users"
