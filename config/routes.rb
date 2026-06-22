@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   resources :care_users, only: [:index, :new, :create]
   resources :care_records, only: [:index, :new, :create]
+  resources :care_record_wizards, only: [:show, :update]
 
   # Defines the root path route ("/")
   # root "articles#index"

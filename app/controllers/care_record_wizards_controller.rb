@@ -1,0 +1,2 @@
+class CareRecordWizardsController < ApplicationController
+end
