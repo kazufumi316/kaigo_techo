@@ -4,7 +4,7 @@
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
-    <%= link_to "記録をつける", new_care_record_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
+    <%= link_to "記録をつける", care_record_wizard_path(:select_care_user), class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
     
     <%= link_to "記録を見る", "#", class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
   
@@ -16,3 +16,4 @@
 
     <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-red-500 font-bold rounded-lg" %>
   </div>
+</div>

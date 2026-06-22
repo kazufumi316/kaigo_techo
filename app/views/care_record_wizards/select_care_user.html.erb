@@ -1,0 +1,17 @@
+<div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
+  <div class="text-4xl font-bold mb-8">
+    <h1>要介護家族選択</h1>
+  </div>
+
+  <%= form_with model: @care_record, url: wizard_path, method: :put, local: true do |f| %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+      <% @care_users.each do |care_user| %>
+        <%= f.button care_user.name,
+              type: "submit",
+              name: "care_record[care_user_id]",
+              value: care_user.id, 
+              class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
