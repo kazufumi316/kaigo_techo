@@ -2,9 +2,9 @@ class CareRecord < ApplicationRecord
   belongs_to :care_user
   belongs_to :user
 
-  enum :health_status, { 良い: 0, 変わらない: 1, 悪い: 2 }
-  enum :appetite, { あり: 0, 変わらない: 1, ない: 2 }
-  enum :sleep_quality, { 多い: 0, 変わらない: 1, 少ない: 2 }
+  enum :health_status, { 良い: 0, 変わらない: 1, 悪い: 2 }, prefix: true
+  enum :appetite, { あり: 0, 変わらない: 1, ない: 2 }, prefix: true
+  enum :sleep_quality, { 多い: 0, 変わらない: 1, 少ない: 2 }, prefix: true
   
   validates :health_status, presence: true
   validates :appetite, presence: true
