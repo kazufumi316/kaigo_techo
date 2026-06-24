@@ -17,8 +17,21 @@ class CareRecordsController < ApplicationController
     end
   end
 
+  def select
+    if current_user.families.exists?
+      family_ids = current_user.family_members.pluck(:family_id)
+      @care_users = CareUser.where(family_id: family_ids)
+    else
+      @care_users = []
+    end
+  end
+
   def index
     @care_records = CareRecord.includes(:user, :care_user)
+    if params[:care_user_id].present?
+      @care_records = @care_records.where(care_user_id: params[:care_user_id])
+      @care_user = CareUser.find(params[:care_user_id])
+    end
   end
 
   private

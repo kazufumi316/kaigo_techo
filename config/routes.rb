@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   resources :homes, only: [:index]
   resources :users, only: [:show]
   resources :care_users, only: [:index, :new, :create]
-  resources :care_records, only: [:index, :new, :create]
+  resources :care_records, only: [:index] do
+    collection do
+      get :select
+    end
+  end
   resources :care_record_wizards, only: [:show, :update]
 
   # Defines the root path route ("/")
