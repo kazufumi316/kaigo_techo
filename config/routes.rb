@@ -10,12 +10,20 @@ Rails.application.routes.draw do
   resources :homes, only: [:index]
   resources :users, only: [:show]
   resources :care_users, only: [:index, :new, :create]
-  resources :care_records, only: [:index] do
+  resources :care_records, only: [:index, :create] do
     collection do
-      get :select
+      get :create_select_care_user
+      patch :save_create_select_care_user
+      get :health_status
+      patch :save_health_status
+      get :appetite
+      patch :save_appetite
+      get :sleep_quality
+      patch :save_sleep_quality
+      get :memo
+      get :view_select_care_user
     end
   end
-  resources :care_record_wizards, only: [:show, :update]
 
   # Defines the root path route ("/")
   # root "articles#index"

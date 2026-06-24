@@ -1,15 +1,15 @@
 <div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
   <div class="text-4xl font-bold mb-8">
-    <h1>睡眠</h1>
+    <h1>食欲</h1>
   </div>
 
-  <%= form_with model: @care_record, url: wizard_path, method: :put, local: true do |f| %>
+  <%= form_with model: @care_record, url: save_appetite_care_records_path, method: :patch, local: true do |f| %>
     <div class="w-75 grid grid-cols-1 gap-4 max-w-2xl">
-      <% CareRecord.sleep_qualities.keys.each do |sleep_quality| %>
-        <%= f.button sleep_quality,
+      <% CareRecord.appetites.keys.each do |appetite| %>
+        <%= f.button appetite,
               type: "submit",
-              name: "care_record[sleep_quality]",
-              value: sleep_quality,
+              name: "care_record[appetite]",
+              value: appetite,
               class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
       <% end %>
     </div>

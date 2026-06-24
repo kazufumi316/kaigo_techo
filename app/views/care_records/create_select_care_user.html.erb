@@ -3,7 +3,7 @@
     <h1>要介護家族選択</h1>
   </div>
 
-  <%= form_with model: @care_record, url: wizard_path, method: :put, local: true do |f| %>
+  <%= form_with model: @care_record, url: save_create_select_care_user_care_records_path, method: :patch, local: true do |f| %>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
       <% @care_users.each do |care_user| %>
         <%= f.button care_user.name,

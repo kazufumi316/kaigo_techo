@@ -3,7 +3,7 @@
     <h1>特記事項</h1>
   </div>
 
-  <%= form_with model: @care_record, url: wizard_path, method: :put, local: true do |f| %>
+  <%= form_with model: @care_record, url: care_records_path, method: :post, local: true do |f| %>
     <div class="field mb-5 w-full flex justify-center">
       <p><%= f.text_area :memo, class: "w-100 mx-w-full h-100 p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" %></p>
     </div>
