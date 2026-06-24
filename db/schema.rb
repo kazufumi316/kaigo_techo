@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_21_061907) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_24_135059) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,15 +29,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_21_061907) do
 
   create_table "care_users", force: :cascade do |t|
     t.date "birthday", null: false
-    t.integer "blood_type", default: 0, null: false
+    t.integer "blood_type", null: false
     t.datetime "created_at", null: false
     t.bigint "family_id", null: false
+    t.string "invite_code", null: false
     t.string "medical_condition_1"
     t.string "medical_condition_2"
     t.string "medical_condition_3"
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["family_id"], name: "index_care_users_on_family_id"
+    t.index ["invite_code"], name: "index_care_users_on_invite_code", unique: true
   end
 
   create_table "families", force: :cascade do |t|

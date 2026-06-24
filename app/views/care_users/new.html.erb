@@ -19,7 +19,7 @@
         <p class="font-bold mb-1"><%= f.label :血液型 %></p>
         <p><%= f.select :blood_type, 
                         CareUser.blood_types.keys,
-                        { prompt: "" },
+                        { prompt: "選択してください" },
                         { class: "w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" } %>
         </p>
       </div>
