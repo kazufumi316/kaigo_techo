@@ -76,7 +76,6 @@ group :test do
 end
 
 gem "tailwindcss-rails", "~> 4.4"
-gem "wicked"
 
 gem "devise", "~> 5.0"
 gem "devise-i18n"

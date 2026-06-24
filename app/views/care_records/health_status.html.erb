@@ -3,7 +3,7 @@
     <h1>体調</h1>
   </div>
 
-  <%= form_with model: @care_record, url: wizard_path, method: :put, local: true do |f| %>
+  <%= form_with model: @care_record, url: save_health_status_care_records_path, method: :patch, local: true do |f| %>
     <div class="w-75 grid grid-cols-1 gap-4 max-w-2xl">
       <% CareRecord.health_statuses.keys.each do |health_status| %>
         <%= f.button health_status,
