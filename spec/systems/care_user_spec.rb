@@ -15,7 +15,7 @@ RSpec.describe '要介護家族新規登録', type: :system do
         dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
         fill_in 'care_user_name', with: dammy_name
         fill_in 'care_user_birthday', with: dammy_date
-        click_on "登録"
+        click_on '登録'
         expect(page).to have_current_path(care_users_path, wait: 5)
         expect(page).to have_content(dammy_name)
     end
