@@ -63,7 +63,7 @@ class CareRecordsController < ApplicationController
   end
 
   def index
-    @care_records = CareRecord.includes(:user, :care_user)
+    @care_records = CareRecord.includes(:user, :care_user).order(created_at: :desc)
     if params[:care_user_id].present?
       @care_records = @care_records.where(care_user_id: params[:care_user_id])
       @care_user = CareUser.find(params[:care_user_id])
