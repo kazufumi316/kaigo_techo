@@ -1,23 +1,20 @@
 <div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
   <div class="text-4xl font-bold mb-8">
-    <h1>マイページ</h1>
+    <h1>アカウント情報</h1>
   </div>
 
   <div class="w-full max-w-md text-3xl text-gray-700">
 
-    <div class="field mb-5">
-      <p class="font-bold mb-1"><%= User.human_attribute_name(:name) %></p>
-      <p class="font-bold w-full p-3"><%= current_user.name %></p>
+    <div class="field items-center mb-5">
+      <p class="font-bold mb-1"><%= User.human_attribute_name(:name) %> : <%= current_user.name %></p>
     </div>
 
-    <div class="field mb-5">
-      <p class="font-bold mb-1"><%= User.human_attribute_name(:tel_number) %></p>
-      <p class="font-bold w-full p-3"><%= current_user.tel_number %></p>
+    <div class="field items-center mb-5">
+      <p class="font-bold mb-1"><%= User.human_attribute_name(:tel_number) %> : <%= current_user.tel_number %></p>
     </div>
 
-    <div class="field mb-5">
-      <p class="font-bold mb-1"><%= User.human_attribute_name(:email) %></p>
-      <p class="font-bold w-full p-3 break-all"><%= current_user.email %></p>
+    <div class="field items-center mb-5">
+      <p class="font-bold mb-1"><%= User.human_attribute_name(:email) %> : <%= current_user.email %></p>
     </div>
   </div>
 

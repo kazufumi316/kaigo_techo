@@ -7,9 +7,8 @@ RSpec.describe '介護記録新規登録', type: :system do
       fill_in 'パスワード', with: 'password'
       click_button "ログイン"
       expect(page).to have_current_path(homes_path, wait: 5)
-      click_on '要介護家族情報'
-        
-      click_on '要介護家族登録'
+      
+      click_on '見守り家族登録'
 
       dammy_name = Faker::Name.name
       dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
@@ -37,9 +36,8 @@ RSpec.describe '介護記録新規登録', type: :system do
       fill_in 'パスワード', with: 'password'
       click_button "ログイン"
       expect(page).to have_current_path(homes_path, wait: 5)
-      click_on '要介護家族情報'
         
-      click_on '要介護家族登録'
+      click_on '見守り家族登録'
 
       dammy_name = Faker::Name.name
       dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
@@ -70,9 +68,8 @@ RSpec.describe '介護記録新規登録', type: :system do
       fill_in 'パスワード', with: 'password'
       click_button "ログイン"
       expect(page).to have_current_path(homes_path, wait: 5)
-      click_on '要介護家族情報'
         
-      click_on '要介護家族登録'
+      click_on '見守り家族登録'
 
       dammy_name = Faker::Name.name
       dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')

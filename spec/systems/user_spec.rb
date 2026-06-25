@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe 'マイページ', type: :system do
-  describe 'マイページに遷移' do
+RSpec.describe 'アカウント情報', type: :system do
+  describe 'アカウント情報に遷移' do
     let(:user) { create(:user) }
-    it "マイページに遷移できること" do
+    it "アカウント情報に遷移できること" do
       visit new_user_session_path
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: 'password'
       click_button "ログイン"
       expect(page).to have_current_path(homes_path, wait: 5)
-      click_on 'マイページ'
+      click_on 'アカウント情報'
       expect(page).to have_content(user.name)
       expect(page).to have_content(user.tel_number)
       expect(page).to have_content(user.email)

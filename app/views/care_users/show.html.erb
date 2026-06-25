@@ -1,32 +1,29 @@
 <div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
   <div class="text-4xl font-bold mb-8">
-    <h1>要介護者情報</h1>
+    <h1>見守り家族情報</h1>
   </div>
 
-  <div class="w-full max-w-md text-3xl text-gray-700">
+  <div class="w-full items-center max-w-md text-3xl text-gray-700">
     <div class="field mb-5">
-      <p class="font-bold mb-1">氏名</p>
-      <p class="font-bold w-full p-3"><%= @care_user.name %></p>
+      <p class="font-bold mb-1">氏名 : <%= @care_user.name %></p>
     </div>
   </div>
 
-  <div class="w-full max-w-md text-3xl text-gray-700">
+  <div class="w-full items-center max-w-md text-3xl text-gray-700">
     <div class="field mb-5">
-      <p class="font-bold mb-1">生年月日</p>
-      <p class="font-bold w-full p-3"><%= @care_user.birthday.strftime('%Y年%-m月%-d日') %></p>
+      <p class="font-bold mb-1">生年月日 : <%= @care_user.birthday.strftime('%Y年%-m月%-d日') %></p>
     </div>
   </div>
 
-  <div class="w-full max-w-md text-3xl text-gray-700">
+  <div class="w-full items-center max-w-md text-3xl text-gray-700">
     <div class="field mb-5">
-      <p class="font-bold mb-1">血液型</p>
-      <p class="font-bold w-full p-3"><%= @care_user.blood_type %></p>
+      <p class="font-bold mb-1">血液型 : <%= @care_user.blood_type %></p>
     </div>
   </div>
 
-  <div class="w-full max-w-md text-3xl text-gray-700">
+  <div class="w-full items-center max-w-md text-3xl text-gray-700">
     <div class="field mb-5">
-      <p class="font-bold mb-1">病名</p>
+      <p class="font-bold mb-1">病名 :</p>
       <p class="font-bold w-full p-3"><%= @care_user.medical_condition_1 %></p>
       <p class="font-bold w-full p-3"><%= @care_user.medical_condition_2 %></p>
       <p class="font-bold w-full p-3"><%= @care_user.medical_condition_3 %></p>
@@ -34,10 +31,9 @@
   </div>
 
   <% if @current_family_member&.main? %>
-    <div class="w-full max-w-md text-3xl text-gray-700">
+    <div class="w-full items-center max-w-md text-3xl text-gray-700">
       <div class="field mb-5">
-        <p class="font-bold mb-1">招待コード</p>
-        <p class="font-bold w-full p-3"><%= @care_user.invite_code %></p>
+        <p class="font-bold mb-1">招待コード : <%= @care_user.invite_code %></p>
       </div>
     </div>
   <% end %>

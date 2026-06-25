@@ -13,9 +13,9 @@ class CareUsersController < ApplicationController
     family = @care_user.build_family(family_name: @care_user.name)
     family.family_members.build(user_id: current_user.id, role: "main")
     if @care_user.save
-      redirect_to care_users_path, success: '要介護家族の登録に成功しました'
+      redirect_to care_users_path, success: '見守り家族の登録に成功しました'
     else
-      flash.now[:danger] = '要介護家族の登録に失敗しました'
+      flash.now[:danger] = '見守り家族の登録に失敗しました'
       render :new, status: :unprocessable_entity
     end
   end
