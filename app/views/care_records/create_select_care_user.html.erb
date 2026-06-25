@@ -3,15 +3,26 @@
     <h1>要介護家族選択</h1>
   </div>
 
-  <%= form_with model: @care_record, url: save_create_select_care_user_care_records_path, method: :patch, local: true do |f| %>
+  <% if @care_users.present? %>
+    <%= form_with model: @care_record, url: save_create_select_care_user_care_records_path, method: :patch, local: true do |f| %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+        <% @care_users.each do |care_user| %>
+          <%= f.button care_user.name,
+                type: "submit",
+                name: "care_record[care_user_id]",
+                value: care_user.id, 
+                class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
+        <% end %>
+      </div>
+    <% end %>
+  
+  <% else %>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
-      <% @care_users.each do |care_user| %>
-        <%= f.button care_user.name,
-              type: "submit",
-              name: "care_record[care_user_id]",
-              value: care_user.id, 
-              class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
-      <% end %>
+      <div class="col-span-full text-center text-4xl mb-5 font-bold">要介護家族の登録は<br>ありません</div>
     </div>
   <% end %>
+
+  <div class="mt-4 grid grid-cols-1 gap-4 max-w-2xl">
+    <%= link_to "戻る", homes_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-gray-300 font-bold rounded-lg" %>
+  </div>
 </div>

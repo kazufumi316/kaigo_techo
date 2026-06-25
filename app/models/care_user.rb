@@ -4,11 +4,23 @@ class CareUser < ApplicationRecord
 
   accepts_nested_attributes_for :family
 
+  before_validation :generate_invite_code, on: :create
+
   validates :name, presence: true
   validates :birthday, presence: true
   validates :medical_condition_1, length: { maximum: 50 }
   validates :medical_condition_2, length: { maximum: 50 }
   validates :medical_condition_3, length: { maximum: 50 }
+  validates :invite_code, length: { is: 6 }
 
-  enum :blood_type, { 不明: 0, A型: 1, B型: 2, O型: 3, AB型: 4 }
+  enum :blood_type, { A型: 0, B型: 1, O型: 2, AB型: 3, 不明: 4 }
+
+  private
+
+  def generate_invite_code
+    loop do
+      self.invite_code = SecureRandom.alphanumeric(6).upcase
+      break unless CareUser.exists?(invite_code: self.invite_code)
+    end
+  end
 end
