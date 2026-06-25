@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :homes, only: [:index]
   resources :users, only: [:show]
-  resources :care_users, only: [:index, :new, :create]
+  resources :care_users, only: [:index, :new, :create, :show]
   resources :care_records, only: [:index, :create] do
     collection do
       get :create_select_care_user
