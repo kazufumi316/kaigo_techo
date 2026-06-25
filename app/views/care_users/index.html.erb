@@ -6,7 +6,7 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
     <% if @care_users.present? %>
       <% @care_users.each do |care_user| %>
-        <%= link_to care_user.name, "#", class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
+        <%= link_to care_user.name, care_user_path(care_user), class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
       <% end %>
     <% else %>
       <div class="col-span-full text-center text-4xl mb-5 font-bold">要介護家族の登録は<br>ありません</div>
