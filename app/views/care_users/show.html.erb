@@ -1,6 +1,6 @@
 <div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
   <div class="text-4xl font-bold mb-8">
-    <h1>見守り家族情報</h1>
+    <h1><%= @care_user.name %>の詳細情報</h1>
   </div>
 
   <div class="w-full items-center max-w-md text-3xl text-gray-700">
@@ -39,7 +39,7 @@
   <% end %>
 
   <div class="mt-4 grid grid-cols-1 gap-4 max-w-2xl">
-    <%= link_to "戻る", homes_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-gray-300 font-bold rounded-lg" %>
+    <%= link_to "戻る", care_users_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-gray-300 font-bold rounded-lg" %>
   </div>
 
 </div>
