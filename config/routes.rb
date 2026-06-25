@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       get :view_select_care_user
     end
   end
+  resources :connect_care_users, only: [:new, :create]
 
   # Defines the root path route ("/")
   # root "articles#index"
