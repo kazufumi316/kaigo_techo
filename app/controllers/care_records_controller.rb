@@ -70,6 +70,10 @@ class CareRecordsController < ApplicationController
     end
   end
 
+  def show
+    @care_record = CareRecord.find(params[:id])
+  end
+
   private
 
   def care_record_params
