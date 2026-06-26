@@ -1,0 +1,54 @@
+<div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
+  <div class="text-center text-4xl font-bold gap-4 mb-8">
+    <h1>介護記録編集ページ</h1>
+  </div>
+  
+  <%= form_with model: @care_record, class: "edit_care_record" do |f| %>
+
+    <div class="w-full max-w-md text-3xl text-gray-700">
+      <div>
+        <p class="field mb-5 w-full flex font-bold"><%= f.label :作成日 %> :
+                                                    <%= @care_record.created_at.strftime('%-m月%-d日 %-H時%M分') %></p>
+      </div>
+
+      <div class="field mb-5">
+        <p class="font-bold mb-1"><%= f.label :体調 %> :
+          <%= f.select :health_status, 
+                        CareRecord.health_statuses.keys,
+                        {},
+                        { class: "w-75 p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" } %>
+        </p>
+      </div>
+    
+      <div class="field mb-5">
+        <p class="font-bold mb-1"><%= f.label :食欲 %> :
+          <%= f.select :appetite, 
+                        CareRecord.appetites.keys,
+                        {},
+                        { class: "w-75 p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" } %>
+        </p>
+      </div>
+
+      <div class="field mb-5">
+        <p class="font-bold mb-1"><%= f.label :睡眠 %> :
+          <%= f.select :sleep_quality, 
+                        CareRecord.sleep_qualities.keys,
+                        {},
+                        { class: "w-75 p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" } %>
+        </p>
+      </div>
+
+      <div>
+        <p class="field mb-5 w-full flex font-bold"><%= f.label :特記事項 %></p>
+        <p><%= f.text_area :memo, class: "w-100 mx-w-full h-100 p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" %></p>
+      </div>
+    </div>
+
+    <div class="flex flex-col justify-center items-center mt-4 gap-4">
+      <div class="actions w-full">
+        <%= f.submit "更新", class: "w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg cursor-pointer" %>
+        <%= link_to "戻る", homes_path, class: "mt-4 w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-gray-300 font-bold rounded-lg cursor-pointer" %>
+      </div>
+    </div>
+  <% end %>
+</div>

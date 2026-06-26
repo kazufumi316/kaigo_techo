@@ -1,9 +1,11 @@
 <div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
-  <div class="text-4xl font-bold mb-8">
+  <div class="text-4xl font-bold">
     <h1>介護記録一覧</h1>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+  <%= render "shared/message" %>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mt-8">
     <% if @care_records.present? %>
       <% @care_records.each do |care_record| %>
         <%= link_to care_record.created_at.strftime('%-m月%-d日 %-H時%M分'), care_record_path(care_record), class: "w-75 flex justify-center items-center px-10 py-6 text-2xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
