@@ -16,8 +16,7 @@ RSpec.describe '介護記録新規登録', type: :system do
       fill_in 'care_user_birthday', with: dammy_date
       select 'A型', from: 'care_user_blood_type'
       click_on '登録'
-      expect(page).to have_current_path(care_users_path, wait: 5)
-      click_on '戻る'
+      expect(page).to have_current_path(homes_path, wait: 5)
       click_on '記録をつける'
       click_on dammy_name
       click_on '変わらない'
@@ -25,6 +24,7 @@ RSpec.describe '介護記録新規登録', type: :system do
       click_on '変わらない'
       click_on '記録する'
       expect(page).to have_current_path(homes_path, wait: 5)
+      expect(page).to have_content "介護記録をつけました"
     end
   end
 
@@ -45,8 +45,7 @@ RSpec.describe '介護記録新規登録', type: :system do
       fill_in 'care_user_birthday', with: dammy_date
       select 'A型', from: 'care_user_blood_type'
       click_on "登録"
-      expect(page).to have_current_path(care_users_path, wait: 5)
-      click_on '戻る'
+      expect(page).to have_current_path(homes_path, wait: 5)
       click_on '記録をつける'
       click_on dammy_name
       click_on '変わらない'
@@ -77,8 +76,7 @@ RSpec.describe '介護記録新規登録', type: :system do
       fill_in 'care_user_birthday', with: dammy_date
       select 'A型', from: 'care_user_blood_type'
       click_on "登録"
-      expect(page).to have_current_path(care_users_path, wait: 5)
-      click_on '戻る'
+      expect(page).to have_current_path(homes_path, wait: 5)
       click_on '記録をつける'
       click_on dammy_name
       click_on '変わらない'

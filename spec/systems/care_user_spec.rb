@@ -16,8 +16,8 @@ RSpec.describe '見守り家族新規登録', type: :system do
       fill_in 'care_user_birthday', with: dammy_date
       select 'A型', from: 'care_user_blood_type'
       click_on '登録'
-      expect(page).to have_current_path(care_users_path, wait: 5)
-      expect(page).to have_content(dammy_name)
+      expect(page).to have_current_path(homes_path, wait: 5)
+      expect(page).to have_content "見守り家族の登録に成功しました"
     end
   end
 
@@ -38,7 +38,8 @@ RSpec.describe '見守り家族新規登録', type: :system do
       fill_in 'care_user_birthday', with: dammy_date
       select 'A型', from: 'care_user_blood_type'
       click_on '登録'
-      expect(page).to have_current_path(care_users_path, wait: 5)
+      expect(page).to have_current_path(homes_path, wait: 5)
+      click_on '見守り家族情報'
       click_on dammy_name
       expect(page).to have_content("氏名")
       expect(page).to have_content("生年月日")
@@ -63,6 +64,7 @@ RSpec.describe '見守り家族新規登録', type: :system do
         fill_in 'care_user_birthday', with: ""
         click_on "登録"
         expect(page).to have_current_path(new_care_user_path, wait: 5)
+        expect(page).to have_content "見守り家族の登録に\n失敗しました"
     end
   end
 end
