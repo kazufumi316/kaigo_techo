@@ -13,7 +13,7 @@ class CareUsersController < ApplicationController
     family = @care_user.build_family(family_name: @care_user.name)
     family.family_members.build(user_id: current_user.id, role: "main")
     if @care_user.save
-      redirect_to homes_path, notice: '見守り家族の登録に成功しました'
+      redirect_to care_users_path, notice: '見守り家族の登録に成功しました'
     else
       logger.error @care_user.errors.full_messages
       flash.now[:alert] = "見守り家族の登録に\n失敗しました"
