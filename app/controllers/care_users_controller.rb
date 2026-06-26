@@ -13,7 +13,7 @@ class CareUsersController < ApplicationController
     family = @care_user.build_family(family_name: @care_user.name)
     family.family_members.build(user_id: current_user.id, role: "main")
     if @care_user.save
-      redirect_to homes_path, notice: '見守り家族の登録に成功しました'
+      redirect_to care_users_path, notice: '見守り家族の登録に成功しました'
     else
       logger.error @care_user.errors.full_messages
       flash.now[:alert] = "見守り家族の登録に\n失敗しました"
@@ -34,6 +34,22 @@ class CareUsersController < ApplicationController
     family_ids = current_user.family_members.pluck(:family_id)
     @care_user = CareUser.where(family_id: family_ids).find(params[:id])
     @current_family_member = current_user.family_members.find_by(family_id: @care_user.family_id)
+  end
+
+  def edit
+    family_ids = current_user.family_members.pluck(:family_id)
+    @care_user = CareUser.where(family_id: family_ids).find(params[:id])
+  end
+
+  def update
+    family_ids = current_user.family_members.pluck(:family_id)
+    @care_user = CareUser.where(family_id: family_ids).find(params[:id])
+    if @care_user.update(care_user_params)
+      redirect_to care_users_path, notice: "見守り家族情報を更新しました"
+    else
+      flash.now[:alert] = "見守り家族の更新に\n失敗しました"
+      render :edit, status: :unprocessable_entity
+    end
   end
 
 

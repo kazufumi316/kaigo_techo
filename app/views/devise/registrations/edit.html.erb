@@ -46,11 +46,11 @@
         <div class="actions w-full">
           <%= f.submit "更新", class: "w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg cursor-pointer" %>
         </div>
+
+        <div class="grid grid-cols-1 gap-4 max-w-2xl">
+          <%= link_to "戻る", users_show_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-gray-300 font-bold rounded-lg" %>
+        </div>
       </div>
     <% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+  </div>
+</div>
