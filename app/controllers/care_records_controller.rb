@@ -44,11 +44,11 @@ class CareRecordsController < ApplicationController
     final_params = session[:care_record_attributes].merge(care_record_params.to_h)
     @care_record = current_user.care_records.build(final_params)
     if @care_record.save
-      redirect_to homes_path, success: '介護記録をつけました'
+      redirect_to homes_path, notice: '介護記録をつけました'
     else
       logger.error @care_record.errors.full_messages
 
-      flash.now[:danger] = '介護記録ができませんでした'
+      flash.now[:alert] = "介護記録が\n作成できませんでした"
       render :memo, status: :unprocessable_entity
     end
   end

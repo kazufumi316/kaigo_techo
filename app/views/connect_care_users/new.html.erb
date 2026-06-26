@@ -1,12 +1,14 @@
 <div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
-  <div class="text-4xl font-bold mb-8">
+  <div class="text-4xl font-bold">
     <h1>見守り家族追加</h1>
   </div>
+
+  <%= render "shared/message" %>
   
   <%= form_with url: connect_care_users_path, local: true do |f| %>
 
     <div class="w-full max-w-md text-3xl text-gray-700">
-      <div class="text-center field mb-5">
+      <div class="text-center field mt-8 mb-5">
         <p class="font-bold mb-4">招待コードを<br>入力してください</p>
         <p><%= f.text_field :invite_code, class: "w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" %></p>
       </div>
