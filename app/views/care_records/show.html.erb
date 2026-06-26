@@ -1,9 +1,11 @@
 <div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
-  <div class="text-4xl font-bold mb-8">
+  <div class="text-4xl font-bold">
     <h1>介護記録詳細</h1>
   </div>
 
-  <div class="w-full max-w-md text-3xl text-gray-700">
+  <%= render "shared/message" %>
+
+  <div class="w-full max-w-md text-3xl text-gray-700 mt-8">
     <div class="field mb-5">
       <p class="font-bold mb-1">記録日時</p>
       <p class="font-bold text-center w-full p-3"><%= @care_record.created_at.strftime('%-m月%-d日 %-H時%M分')  %></p>
@@ -31,6 +33,10 @@
   <div class="w-full text-center max-w-md text-3xl text-gray-700">
     <p class="font-bold mb-1">特記事項</p>
     <p class="font-bold w-full p-3"><%= safe_join(@care_record.memo.to_s.split("\n"), tag(:br)) %></p>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 max-w-2xl">
+    <%= link_to "編集", edit_care_record_path, class: "w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg cursor-pointer" %>
   </div>
 
   <div class="mt-4 grid grid-cols-1 gap-4 max-w-2xl">
