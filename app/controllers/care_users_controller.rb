@@ -53,9 +53,16 @@ class CareUsersController < ApplicationController
   end
 
   def destroy
-
+    family_ids = current_user.family_members.pluck(:family_id)
+    care_user = CareUser.where(family_id: family_ids).find(params[:id])
+    current_family_member = current_user.family_members.find_by(family_id: care_user.family_id)
+    if current_family_member.nil? || !current_family_member.main?
+      redirect_to care_user_path(care_user), alert: "削除権限がありません"
+      return
+    end
+    care_user.family.destroy!
+    redirect_to homes_path, success: "見守り家族のアカウントを\n削除しました", status: :see_other
   end
-
 
 
   private

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :homes, only: [:index]
   resources :users, only: [:show]
-  resources :care_users, only: [:index, :new, :create, :show, :edit, :update]
+  resources :care_users, only: [:index, :new, :create, :show, :edit, :update, :destroy]
   resources :care_records, only: [:index, :create, :show, :edit, :update] do
     collection do
       get :create_select_care_user
