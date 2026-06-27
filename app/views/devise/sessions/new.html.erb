@@ -1,17 +1,15 @@
 <div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
-  <div class="text-4xl font-bold mb-8">
+  <div class="text-4xl font-bold">
     <h1>ログイン</h1>
   </div>
 
   <div class="w-full max-w-md text-3xl text-gray-700">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <% if flash[:alert] %>
-        <ul class="font-bold text-3xl text-red-500 mb-2 items-center gap-2">
-          <%= flash[:alert] %>
-        </ul>
+        <%= render "shared/message" %>
       <% end %>
 
-      <div class="field mb-5">
+      <div class="field mt-8 mb-5">
         <p class="font-bold mb-1"><%= f.label :email %></p>
         <p><%= f.email_field :email, autocomplete: "email", class: "w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" %></p>
       </div>

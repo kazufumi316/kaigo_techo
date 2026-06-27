@@ -34,7 +34,7 @@ RSpec.describe 'アカウント登録', type: :system do
       fill_in 'パスワード（確認用）', with: 'password1'
       click_button "更新"
       expect(page).to have_current_path(homes_path, wait: 5)
-      expect(page).to have_content "アカウント情報を更新しました"
+      expect(page).to have_content "アカウント情報を\n更新しました"
     end
   end
 
@@ -70,6 +70,27 @@ RSpec.describe 'アカウント登録', type: :system do
       click_button "更新"
       expect(current_path).to eq edit_user_registration_path
       expect(page).to have_content "入力にエラーがあります"
+    end
+  end
+end
+
+RSpec.describe 'アカウント削除', type: :system do    
+  describe 'アカウント削除に成功' do
+    it "アカウント削除が成功しトップページに遷移すること" do
+      visit new_user_registration_path
+      fill_in '氏名', with: Faker::Name.name
+      fill_in '電話番号', with: Faker::PhoneNumber.phone_number
+      fill_in 'メールアドレス', with: Faker::Internet.email
+      fill_in 'パスワード', with: 'password'
+      fill_in 'パスワード（確認用）', with: 'password'
+      click_button "登録"
+      expect(page).to have_current_path(homes_path, wait: 5)
+      click_on "アカウント情報"
+      accept_confirm(wait: 5) do
+        click_on "アカウント削除"
+      end
+      expect(page).to have_current_path(root_path)
+      expect(page).to have_content "アカウントを削除しました\nまたのご利用を\nお待ちしております"
     end
   end
 end
