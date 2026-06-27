@@ -61,7 +61,7 @@ class CareUsersController < ApplicationController
       return
     end
     care_user.family.destroy!
-    redirect_to homes_path, success: "見守り家族のアカウントを\n削除しました", status: :see_other
+    redirect_to care_users_path, notice: "見守り家族のアカウントを\n削除しました", status: :see_other
   end
 
 
