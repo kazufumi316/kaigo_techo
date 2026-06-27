@@ -42,4 +42,13 @@
   <div class="mt-4 grid grid-cols-1 gap-4 max-w-2xl">
     <%= link_to "戻る", care_records_path(care_user_id: @care_record.care_user.id), class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-gray-300 font-bold rounded-lg" %>
   </div>
+
+  <% if current_user && @care_record.user_id == current_user.id %>
+    <div class="mt-15 grid grid-cols-1 gap-4 max-w-2xl">
+      <%= link_to "介護記録削除", 
+                  care_record_path(@care_record), 
+                  class: "w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-red-500 hover:bg-red-300 font-bold rounded-lg cursor-pointer",
+                  data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか?" }  %>
+    </div>
+  <% end %>
 </div>
