@@ -90,7 +90,7 @@ RSpec.describe '見守り家族新規登録', type: :system do
         fill_in 'care_user_birthday', with: ""
         click_on "登録"
         expect(page).to have_current_path(new_care_user_path, wait: 5)
-        expect(page).to have_content "見守り家族の登録に\n失敗しました"
+        expect(page).to have_content "入力にエラーがあります"
     end
   end
 

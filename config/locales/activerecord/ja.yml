@@ -1,2 +1,7 @@
 ja:
   activerecord:
+    attributes:
+      care_user:
+        name: 名前
+        birthday: 誕生日
+        blood_type: 血液型

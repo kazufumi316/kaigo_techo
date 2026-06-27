@@ -8,6 +8,7 @@ class CareUser < ApplicationRecord
 
   validates :name, presence: true
   validates :birthday, presence: true
+  validates :blood_type, presence: true
   validates :medical_condition_1, length: { maximum: 50 }
   validates :medical_condition_2, length: { maximum: 50 }
   validates :medical_condition_3, length: { maximum: 50 }

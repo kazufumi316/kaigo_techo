@@ -16,7 +16,7 @@ class CareUsersController < ApplicationController
       redirect_to care_users_path, notice: '見守り家族の登録に成功しました'
     else
       logger.error @care_user.errors.full_messages
-      flash.now[:alert] = "見守り家族の登録に\n失敗しました"
+      flash.now[:alert] = "入力にエラーがあります"
       render :new, status: :unprocessable_entity
     end
   end
@@ -51,6 +51,11 @@ class CareUsersController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
+
+  def destroy
+
+  end
+
 
 
   private
