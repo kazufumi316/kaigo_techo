@@ -227,7 +227,7 @@
   - 睡眠(多い、変わらない、少ない)
   - 特記事項
   - 各ページ戻るボタン設置
-- 記録確認ページ：カレンダーで日付ごとの確認ができる
+- 記録確認ページ：記録作成日時での確認ができる
   - 記録詳細ページ：体調、食欲、睡眠、特記事項を確認、戻るボタンを設置
     - 記録編集機能
 - マイページ：アカウント情報表示
@@ -298,13 +298,13 @@
       - gem devise：新規登録、ログイン機能、ログアウト
       - gem devise-i18n：devise機能日本語化
   - (UI関連)
-    - gem simple_calendar：記録確認ページでのカレンダー使用のため
-    - gem i18n：カレンダー機能の日本語設定のため
+    - gem i18n：日本語設定のため
   - (テスト駆動)
     - gem rspec-rails：Rspecテスト導入のため
-    - gem factory-bot：rspecテスト実行のため
+    - gem factory-bot：RSpecテスト実行のため
+    - gem selenium-webdriver：RSpecテスト実行のため
     - gem faker：factory-botでアカウントテスト作成のため
-    - gem letter_opener_web：パスワードリセット確認のため
+    - gem letter_opener_web：パスワードリセット確認のため(本リリース時に実装予定)
 
 ### 10-2.キャッチアップ不足の懸念
 
@@ -342,6 +342,7 @@
 - medical_condition_1 : string / 病名-1(文字数制限 : 50)
 - medical_condition_2 : string / 病名-2(文字数制限 : 50)
 - medical_condition_3 : string / 病名-3(文字数制限 : 50)
+- invite_code : string / 招待コード
 - created_at : timestamp / 作成日
 - updated_at : timestamp / 更新日
 
