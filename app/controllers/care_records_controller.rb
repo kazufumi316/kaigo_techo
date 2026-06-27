@@ -94,6 +94,17 @@ class CareRecordsController < ApplicationController
     end
   end
 
+  def destroy
+    care_record = CareRecord.find(params[:id])
+    if care_record.user_id != current_user.id
+      redirect_to care_record_path(care_record), alert: "削除権限がありません"
+      return
+    end
+    record_created_at = care_record.created_at.strftime('%-m月%-d日 %-H時%M分')
+    care_record.destroy!
+    redirect_to care_records_path, notice: "#{record_created_at}\n介護記録を削除しました", status: :see_other
+  end
+
   private
 
   def care_record_params
