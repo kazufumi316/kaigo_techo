@@ -73,7 +73,7 @@ RSpec.describe '見守り家族新規登録', type: :system do
       select 'B型', from: 'care_user_blood_type'
       click_on '更新'
       expect(page).to have_current_path(care_users_path, wait: 5)
-      expect(page).to have_content "見守り家族情報を更新しました"
+      expect(page).to have_content "見守り家族情報を\n更新しました"
     end
   end
 
