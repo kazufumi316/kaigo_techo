@@ -45,7 +45,7 @@ class CareUsersController < ApplicationController
     family_ids = current_user.family_members.pluck(:family_id)
     @care_user = CareUser.where(family_id: family_ids).find(params[:id])
     if @care_user.update(care_user_params)
-      redirect_to care_users_path, notice: "見守り家族情報を更新しました"
+      redirect_to care_users_path, notice: "見守り家族情報を\n更新しました"
     else
       flash.now[:alert] = "見守り家族の更新に\n失敗しました"
       render :edit, status: :unprocessable_entity

@@ -1,5 +1,5 @@
 <% if flash.any? %>
-  <div class="px-5 sm:text-center font-bold text-3xl bg-orange-50 mb-4">
+  <div class="px-5 text-center font-bold text-3xl bg-orange-50 mb-4">
     <% flash.each do |message_type, message| %>
       <% text_color = (message_type.to_s == 'notice' || message_type.to_s == 'success') ? 'text-green-500' : 'text-red-500' %>
       <div class="alert alert-<%= message_type %> <%= text_color %> whitespace-pre-line">

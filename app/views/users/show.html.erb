@@ -23,6 +23,12 @@
       <%= link_to "編集", edit_user_registration_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
 
       <%= link_to "戻る", homes_path, class: "mt-4 w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-gray-300 font-bold rounded-lg" %>
+
+      <div class="mt-40 w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-red-500 hover:bg-red-300 font-bold rounded-lg">
+        <%= button_to "アカウント削除", users_path,
+                      data: { confirm: "Are you sure?", turbo_confirm: "本当に削除しますか?\n このアカウントで登録した見守り家族の情報も\n 削除されますがよろしいですか?" }, 
+                      method: :delete %>
+      </div>
     </div>
   </div>
 </div>
