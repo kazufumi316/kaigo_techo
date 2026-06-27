@@ -4,6 +4,16 @@
   </div>
 
   <%= render "shared/message" %>
+
+  <% if @care_user.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <div class="flex flex-col font-bold text-2xl text-red-500 items-center gap-2">
+        <% @care_user.errors.each do |error| %>
+          <p><%= error.full_message %></p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
   
   <%= form_with model: @care_user, class: "new_care_user" do |f| %>
 

@@ -46,4 +46,12 @@
     <%= link_to "戻る", care_users_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-gray-300 font-bold rounded-lg" %>
   </div>
 
+  <% if @current_family_member&.main? %>
+    <div class="mt-15 grid grid-cols-1 gap-4 max-w-2xl">
+      <%= link_to "見守り家族削除", 
+                  care_user_path(@care_user), 
+                  class: "w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-red-500 hover:bg-red-300 font-bold rounded-lg cursor-pointer",
+                  data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか?" }  %>
+    </div>
+  <% end %>
 </div>

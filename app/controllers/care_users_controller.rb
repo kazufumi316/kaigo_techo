@@ -16,7 +16,7 @@ class CareUsersController < ApplicationController
       redirect_to care_users_path, notice: '見守り家族の登録に成功しました'
     else
       logger.error @care_user.errors.full_messages
-      flash.now[:alert] = "見守り家族の登録に\n失敗しました"
+      flash.now[:alert] = "入力にエラーがあります"
       render :new, status: :unprocessable_entity
     end
   end
@@ -50,6 +50,18 @@ class CareUsersController < ApplicationController
       flash.now[:alert] = "見守り家族の更新に\n失敗しました"
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    family_ids = current_user.family_members.pluck(:family_id)
+    care_user = CareUser.where(family_id: family_ids).find(params[:id])
+    current_family_member = current_user.family_members.find_by(family_id: care_user.family_id)
+    if current_family_member.nil? || !current_family_member.main?
+      redirect_to care_user_path(care_user), alert: "削除権限がありません"
+      return
+    end
+    care_user.family.destroy!
+    redirect_to care_users_path, notice: "見守り家族のアカウントを\n削除しました", status: :see_other
   end
 
 
