@@ -100,9 +100,10 @@ class CareRecordsController < ApplicationController
       redirect_to care_record_path(care_record), alert: "削除権限がありません"
       return
     end
+    record_care_user_id = care_record.care_user_id
     record_created_at = care_record.created_at.strftime('%-m月%-d日 %-H時%M分')
     care_record.destroy!
-    redirect_to care_records_path, notice: "#{record_created_at}\n介護記録を削除しました", status: :see_other
+    redirect_to care_records_path(care_user_id: record_care_user_id), notice: "#{record_created_at}\n介護記録を削除しました", status: :see_other
   end
 
   private
