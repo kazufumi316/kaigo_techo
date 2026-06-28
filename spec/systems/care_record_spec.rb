@@ -19,6 +19,7 @@ RSpec.describe '介護記録新規登録', type: :system do
       click_on '記録をつける'
       click_on dammy_name
       click_on '変わらない'
+      sleep 1
       click_on '変わらない'
       click_on '変わらない'
       click_on '記録する'
@@ -131,10 +132,10 @@ RSpec.describe '介護記録新規登録', type: :system do
   end
 end
 
-RSpec.describe '介護記録新規登録', type: :system do
-  describe '介護記録が新規登録できること' do
+RSpec.describe '介護記録削除', type: :system do
+  describe '介護記録が削除できること' do
     let(:user) { create(:user) }
-    it "介護記録新規登録成功したらホーム画面に遷移すること" do
+    it "介護記録削除に成功したら個別記録一覧に遷移すること" do
       visit new_user_session_path
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: 'password'
@@ -164,7 +165,7 @@ RSpec.describe '介護記録新規登録', type: :system do
       accept_confirm(wait: 5) do
         click_on "介護記録削除"
       end
-      expect(page).to have_current_path(care_records_path, wait: 5)
+      expect(page).to have_current_path(%r{/care_records/\d+})
       expect(page).to have_content "#{target_date}\n介護記録を削除しました"
     end
   end
