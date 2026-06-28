@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   validates :name,       presence: true
   validates :tel_number, presence: true, uniqueness: true
+  validates :password, presence: true, length: { minimum: 6, maximum: 128 }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
