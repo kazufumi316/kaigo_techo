@@ -34,6 +34,7 @@ class CareUsersController < ApplicationController
     family_ids = current_user.family_members.pluck(:family_id)
     @care_user = CareUser.where(family_id: family_ids).find(params[:id])
     @current_family_member = current_user.family_members.find_by(family_id: @care_user.family_id)
+    @care_users = CareUser.where(family_id: family_ids)
   end
 
   def edit
