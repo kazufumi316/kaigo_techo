@@ -1,6 +1,9 @@
 class CareUsersController < ApplicationController
 
   before_action :authenticate_user!
+  before_action :set_family_ids, only: [:index, :show, :edit, :update]
+  before_action :set_care_user, only: [:show, :edit, :update]
+  before_action :set_care_users, only: [:index, :show]
   
   def new
     @care_user = CareUser.new
@@ -23,28 +26,19 @@ class CareUsersController < ApplicationController
 
   def index
     if current_user.families.exists?
-      family_ids = current_user.family_members.pluck(:family_id)
-      @care_users = CareUser.where(family_id: family_ids)
     else
       @care_users = []
     end
   end
 
   def show
-    family_ids = current_user.family_members.pluck(:family_id)
-    @care_user = CareUser.where(family_id: family_ids).find(params[:id])
     @current_family_member = current_user.family_members.find_by(family_id: @care_user.family_id)
-    @care_users = CareUser.where(family_id: family_ids)
   end
 
   def edit
-    family_ids = current_user.family_members.pluck(:family_id)
-    @care_user = CareUser.where(family_id: family_ids).find(params[:id])
   end
 
   def update
-    family_ids = current_user.family_members.pluck(:family_id)
-    @care_user = CareUser.where(family_id: family_ids).find(params[:id])
     if @care_user.update(care_user_params)
       redirect_to care_users_path, notice: "見守り家族情報を\n更新しました"
     else
@@ -56,13 +50,19 @@ class CareUsersController < ApplicationController
   def destroy
     family_ids = current_user.family_members.pluck(:family_id)
     care_user = CareUser.where(family_id: family_ids).find(params[:id])
+    care_users = CareUser.where(family_id: family_ids)
     current_family_member = current_user.family_members.find_by(family_id: care_user.family_id)
     if current_family_member.nil? || !current_family_member.main?
       redirect_to care_user_path(care_user), alert: "削除権限がありません"
       return
     end
+
     care_user.family.destroy!
-    redirect_to care_users_path, notice: "見守り家族のアカウントを\n削除しました", status: :see_other
+    if care_users.count <= 1
+      redirect_to homes_path, notice: "見守り家族のアカウントを\n削除しました", status: :see_other
+    else
+      redirect_to care_users_path, notice: "見守り家族のアカウントを\n削除しました", status: :see_other
+    end
   end
 
 
@@ -77,5 +77,17 @@ class CareUsersController < ApplicationController
       :medical_condition_2, 
       :medical_condition_3
     )
+  end
+
+  def set_family_ids
+    @family_ids = current_user.family_members.pluck(:family_id)
+  end
+
+  def set_care_user
+    @care_user = CareUser.where(family_id: @family_ids).find(params[:id])
+  end
+
+  def set_care_users
+    @care_users = CareUser.where(family_id: @family_ids)
   end
 end
