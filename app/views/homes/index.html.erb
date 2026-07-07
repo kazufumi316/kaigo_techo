@@ -9,9 +9,13 @@
     <%= link_to "記録をつける", create_select_care_user_care_records_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
     
     <%= link_to "記録を見る", view_select_care_user_care_records_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
-  
-    <%= link_to "見守り家族情報", care_users_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
     
+    <% if @care_users.count == 1 %>
+      <%= link_to "見守り家族情報", care_user_path(@care_users.first.id), class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
+    <% else %>
+      <%= link_to "見守り家族情報", care_users_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
+    <% end %>
+
     <%= link_to "アカウント情報", users_show_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
 
     <%= link_to "見守り家族登録", new_care_user_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-green-500 hover:bg-green-300 font-bold rounded-lg" %>
