@@ -1,0 +1,40 @@
+<div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
+  <div class="text-center text-4xl font-bold mb-8">
+    <h1>記録を確認</h1>
+  </div>
+
+  <div class="w-full max-w-5xl bg-white rounded-lg shadow p-2 sm:p-4 [&_table]:w-full [&_table]:table-fixed [&_table]:border-collapse [&_th]:border [&_th]:border-orange-200 [&_th]:bg-orange-50 [&_th]:p-2 sm:p-3 [&_th]:font-bold [&_th]:text-center [&_td]:border [&_td]:border-gray-200 [&_td]:p-2 [&_td]:h-36 [&_td]:vertical-top [&_td]:relative [&_.today]:bg-orange-100/50 [&_.today]:font-bold [&_.not-current-month]:bg-gray-100 [&_.not-current-month]:opacity-40">
+    <%= month_calendar(events: @care_records, attribute: :created_at) do |date, records| %>
+      
+      <div class="absolute top-1 left-2 text-gray-500 font-medium text-xs sm:text-sm pointer-events-none">
+        <%= date.day %>
+      </div>
+
+      <% if records.present? %>
+        <div class="flex flex-col gap-1 pt-4">
+          <% records.sort_by(&:created_at).each do |care_record| %>
+            <% care_user = care_record.care_user %>
+            <% stamp = "" %>
+            <% if care_record.health_status == "悪い" %>
+              <% stamp = "😨" %>
+            <% elsif care_record.memo.present? %>
+              <% stamp = "✏️" %>
+            <% end %>
+
+            <%= link_to care_record_path(care_record), class: "block w-full text-center rounded transition-colors cursor-pointer p-0.5" do %>
+              
+              <span class="block text-[10px] sm:text-xs bg-orange-500 hover:bg-orange-400 text-white font-bold rounded px-1 py-0.5 truncate">
+                <%= stamp %> <%= care_user.name %>
+              </span>
+
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="mt-4 grid grid-cols-1 gap-4 max-w-2xl">
+    <%= link_to "戻る", homes_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-gray-300 font-bold rounded-lg" %>
+  </div>
+</div>
