@@ -89,7 +89,10 @@ class CareRecordsController < ApplicationController
     end
   end
 
-  def show;end
+  def show
+    @care_record = CareRecord.find(params[:id])
+    @care_user = @care_record.care_user
+  end
 
   def edit;end
 
