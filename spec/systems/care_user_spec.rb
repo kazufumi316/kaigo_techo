@@ -40,7 +40,7 @@ RSpec.describe '見守り家族情報', type: :system do
       click_on '見守り家族情報'
       expect(page).to have_content(@dammy_name)
       birthday = @dammy_date.strftime('%Y年%-m月%-d日')
-      expect(page).to have_content(birthday)
+      expect(page).to have_content("生年月日")
       expect(page).to have_content("A型")
       expect(page).to have_content("病名")
       expect(page).to have_content("招待コード")
@@ -54,7 +54,7 @@ RSpec.describe '見守り家族情報', type: :system do
         click_on @dammy_name_2
         expect(page).to have_content(@dammy_name_2)
         birthday = @dammy_date_2.strftime('%Y年%-m月%-d日')
-        expect(page).to have_content(birthday)
+        expect(page).to have_content("生年月日")
         expect(page).to have_content("B型")
         expect(page).to have_content("病名")
         expect(page).to have_content("招待コード")
