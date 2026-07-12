@@ -39,10 +39,25 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
-
 require 'database_cleaner/active_record'
 
 RSpec.configure do |config|
+  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+  config.fixture_paths = [
+    Rails.root.join('spec/fixtures')
+  ]
+
+  # Filter lines from Rails gems in backtraces.
+  config.filter_rails_from_backtrace!
+  # arbitrary gems may also be filtered via:
+  # config.filter_gems_from_backtrace("gem name")
+  config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :request
+
+  # DatabaseCleaner handles data cleanup instead of RSpec's built-in
+  # transactional fixtures, since system specs run the app server and
+  # the browser (remote Selenium) on separate connections/threads.
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
