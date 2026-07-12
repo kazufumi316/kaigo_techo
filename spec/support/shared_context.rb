@@ -53,9 +53,13 @@ RSpec.shared_context "介護記録作成" do
   before do
     visit homes_path
     click_on '記録をつける'
+    expect(page).to have_content("体調はどうですか？")
     click_on '変わらない'
+    expect(page).to have_content("食欲はありますか？")
     click_on 'あり'
+    expect(page).to have_content("睡眠はどうでしたか？")
     click_on '少ない'
+    expect(page).to have_content("普段と違うことがあれば")
     click_on '記録する'
   end
 end
@@ -65,9 +69,13 @@ RSpec.shared_context "介護記録作成2人目" do
     visit homes_path
     click_on '記録をつける'
     click_on @dammy_name_2
+    expect(page).to have_content("体調はどうですか？")
     click_on '変わらない'
+    expect(page).to have_content("食欲はありますか？")
     click_on 'あり'
+    expect(page).to have_content("睡眠はどうでしたか？")
     click_on '少ない'
+    expect(page).to have_content("普段と違うことがあれば")
     click_on '記録する'
   end
 end
