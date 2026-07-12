@@ -24,6 +24,18 @@ RSpec.describe 'アカウント登録', type: :system do
   end
 end
 
+RSpec.describe 'アカウント情報', type: :system do
+  describe 'アカウント情報確認' do
+    include_context 'アカウント登録'
+    it "アカウント情報に遷移できること" do
+      click_on 'アカウント情報'
+      expect(page).to have_content(@name)
+      expect(page).to have_content(@phone_number)
+      expect(page).to have_content(@email)
+    end
+  end
+end
+
 RSpec.describe 'アカウント編集', type: :system do
   describe 'アカウント編集成功' do
     include_context 'アカウント登録'

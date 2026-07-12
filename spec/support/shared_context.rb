@@ -1,9 +1,12 @@
 RSpec.shared_context "アカウント登録" do
   before do
     visit new_user_registration_path
-    fill_in '氏名', with: Faker::Name.name
-    fill_in '電話番号', with: Faker::PhoneNumber.phone_number
-    fill_in 'メールアドレス', with: Faker::Internet.email
+    @name = Faker::Name.name
+    @phone_number = Faker::PhoneNumber.phone_number
+    @email = Faker::Internet.email
+    fill_in '氏名', with: @name
+    fill_in '電話番号', with: @phone_number
+    fill_in 'メールアドレス', with: @email
     fill_in 'パスワード', with: 'password'
     fill_in 'パスワード（確認用）', with: 'password'
     click_button "登録"
