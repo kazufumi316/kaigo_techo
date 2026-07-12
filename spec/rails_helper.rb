@@ -38,56 +38,35 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+
+require 'database_cleaner/active_record'
+
 RSpec.configure do |config|
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_paths = [
-    Rails.root.join('spec/fixtures')
-  ]
+  config.use_transactional_fixtures = false
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = true
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+    Capybara.default_max_wait_time = 5
+  end
 
-  # You can uncomment this line to turn off ActiveRecord support entirely.
-  # config.use_active_record = false
-
-  # RSpec Rails uses metadata to mix in different behaviours to your tests,
-  # for example enabling you to call `get` and `post` in request specs. e.g.:
-  #
-  #     RSpec.describe UsersController, type: :request do
-  #       # ...
-  #     end
-  #
-  # The different available types are documented in the features, such as in
-  # https://rspec.info/features/8-0/rspec-rails
-  #
-  # You can also infer these behaviours automatically by location, e.g.
-  # /spec/models would pull in the same behaviour as `type: :model` but this
-  # behaviour is considered legacy and will be removed in a future version.
-  #
-  # To enable this behaviour uncomment the line below.
-  # config.infer_spec_type_from_file_location!
-
-  # Filter lines from Rails gems in backtraces.
-  config.filter_rails_from_backtrace!
-  # arbitrary gems may also be filtered via:
-  # config.filter_gems_from_backtrace("gem name")
-  config.include FactoryBot::Syntax::Methods
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
 
   config.before(:each, type: :system) do
     driven_by :remote_chrome
     Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
     Capybara.server_port = 3001
     Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
+    DatabaseCleaner.strategy = :truncation
   end
 
-  config.before(:each, type: :system, js: true) do
-    driven_by :remote_chrome
-    Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
-    Capybara.server_port = 3001
-    Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
-  end  
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.append_after(:each) do
+    DatabaseCleaner.clean
+  end
 end
