@@ -33,6 +33,7 @@ RSpec.shared_context "見守り家族作成" do
     fill_in 'care_user_birthday', with: @dammy_date
     select 'A型', from: 'care_user_blood_type'
     click_on '登録'
+    expect(page).to have_content "見守り家族の登録に成功しました"
   end
 end
 
@@ -46,6 +47,7 @@ RSpec.shared_context "見守り家族2人目作成" do
     fill_in 'care_user_birthday', with: @dammy_date_2
     select 'B型', from: 'care_user_blood_type'
     click_on '登録'
+    expect(page).to have_content "見守り家族の登録に成功しました"
   end
 end
 
