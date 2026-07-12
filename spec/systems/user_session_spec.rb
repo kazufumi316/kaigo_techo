@@ -12,7 +12,7 @@ RSpec.describe 'ユーザーログイン', type: :system do
   describe 'ログイン失敗' do
     it "ログイン失敗時にアラートが出ること" do
       visit new_user_session_path
-      click_button "ログイン"
+      click_on "ログイン"
       expect(page).to have_content "メールアドレスまたは\nパスワードが違います"
       expect(current_path).to eq new_user_session_path
     end
@@ -24,7 +24,7 @@ RSpec.describe 'ユーザーログイン', type: :system do
       visit new_user_session_path
       fill_in 'メールアドレス', with: 'xx@xx.com'
       fill_in 'パスワード', with: 'password'
-      click_button "ログイン"
+      click_on "ログイン"
       expect(page).to have_content "メールアドレスまたは\nパスワードが違います"
       expect(current_path).to eq new_user_session_path
     end

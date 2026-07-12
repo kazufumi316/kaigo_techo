@@ -17,7 +17,7 @@ RSpec.describe 'アカウント登録', type: :system do
       fill_in 'メールアドレス', with: ""
       fill_in 'パスワード', with: ""
       fill_in 'パスワード（確認用）', with: ""
-      click_button "登録"
+      click_on "登録"
       expect(current_path).to eq new_user_registration_path
       expect(page).to have_content "入力にエラーがあります"
     end
@@ -47,7 +47,7 @@ RSpec.describe 'アカウント編集', type: :system do
       fill_in 'メールアドレス', with: 'fake@fake.com'
       fill_in 'パスワード', with: 'password1'
       fill_in 'パスワード（確認用）', with: 'password1'
-      click_button "更新"
+      click_on "更新"
       expect(page).to have_current_path(homes_path)
       expect(page).to have_content "アカウント情報を\n更新しました"
     end
@@ -61,7 +61,7 @@ RSpec.describe 'アカウント編集', type: :system do
       fill_in '氏名', with: ""
       fill_in '電話番号', with: ""
       fill_in 'メールアドレス', with: ""
-      click_button "更新"
+      click_on "更新"
       expect(current_path).to eq edit_user_registration_path
       expect(page).to have_content "入力にエラーがあります"
     end

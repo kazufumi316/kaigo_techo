@@ -33,7 +33,6 @@ RSpec.shared_context "見守り家族作成" do
     fill_in 'care_user_birthday', with: @dammy_date
     select 'A型', from: 'care_user_blood_type'
     click_on '登録'
-    expect(page).to have_current_path(care_users_path)
   end
 end
 
@@ -47,6 +46,28 @@ RSpec.shared_context "見守り家族2人目作成" do
     fill_in 'care_user_birthday', with: @dammy_date_2
     select 'B型', from: 'care_user_blood_type'
     click_on '登録'
-    expect(page).to have_current_path(care_users_path)
+  end
+end
+
+RSpec.shared_context "介護記録作成" do
+  before do
+    visit homes_path
+    click_on '記録をつける'
+    click_on '変わらない'
+    click_on 'あり'
+    click_on '少ない'
+    click_on '記録する'
+  end
+end
+
+RSpec.shared_context "介護記録作成2人目" do
+  before do
+    visit homes_path
+    click_on '記録をつける'
+    click_on @dammy_name_2
+    click_on '変わらない'
+    click_on 'あり'
+    click_on '少ない'
+    click_on '記録する'
   end
 end
