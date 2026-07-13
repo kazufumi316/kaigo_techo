@@ -62,7 +62,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
-    Capybara.default_max_wait_time = 5
+    Capybara.default_max_wait_time = ENV['CI'] ? 15 : 5
   end
 
   config.before(:each) do

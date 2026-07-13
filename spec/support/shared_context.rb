@@ -33,6 +33,12 @@ RSpec.shared_context "見守り家族作成" do
     fill_in 'care_user_birthday', with: @dammy_date
     select 'A型', from: 'care_user_blood_type'
     click_on '登録'
+
+    puts "DEBUG: CareUser.count=#{CareUser.count}"
+    puts "DEBUG: Family.count=#{Family.count}"
+    puts "DEBUG: FamilyMember.count=#{FamilyMember.count}"
+    puts "DEBUG: FamilyMember records: #{FamilyMember.all.map { |fm| [fm.user_id, fm.family_id, fm.role] }}"
+    puts "DEBUG: current test user id=#{user.id}"
   end
 end
 
