@@ -27,6 +27,7 @@ end
 RSpec.shared_context "見守り家族作成" do
   before do
     click_on '見守り家族登録'
+    expect(page).to have_content '見守り家族登録'
     @dammy_name = Faker::Name.name
     @dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
     fill_in 'care_user_name', with: @dammy_name
@@ -41,6 +42,7 @@ RSpec.shared_context "見守り家族2人目作成" do
   before do
     visit homes_path
     click_on '見守り家族登録'
+    expect(page).to have_content '見守り家族登録'
     @dammy_name_2 = Faker::Name.name
     @dammy_date_2 = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
     fill_in 'care_user_name', with: @dammy_name_2
