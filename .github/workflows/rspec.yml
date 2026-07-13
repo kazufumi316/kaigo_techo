@@ -53,10 +53,11 @@ jobs:
       - name: Build Tailwind CSS
         run: bin/rails tailwindcss:build
 
-      - name: Run RSpec tests 
+      - name: Run RSpec tests
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:password@localhost:5432/my_app_test
+          SELENIUM_DRIVER_URL: http://localhost:4444/wd/hub
         run: bundle exec rspec
 
       - name: Upload Capybara screenshots
