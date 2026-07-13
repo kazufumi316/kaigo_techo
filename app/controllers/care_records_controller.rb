@@ -85,8 +85,25 @@ class CareRecordsController < ApplicationController
       @care_records = @care_records.where(care_user_id: params[:care_user_id])
       @care_user = CareUser.find(params[:care_user_id])
     else
-      @care_records = []
+      @care_records = CareRecord.none
     end
+
+    @year = params[:year].to_i
+    @month = params[:month].to_i
+    if @year.zero? || @month.zero?
+      @target_date = Time.current.to_date
+    else
+      begin
+        @target_date = Date.new(@year, @month, 1)
+      rescue ArgumentError
+        @target_date = Time.current.to_date
+      end
+    end
+    start_date = @target_date.beginning_of_month
+    end_date = @target_date.end_of_month
+    @reports = @care_records.where(created_at: start_date..end_date).order(created_at: :asc)
+    @prev_month = @target_date.prev_month
+    @next_month = @target_date.next_month
   end
 
   def show
