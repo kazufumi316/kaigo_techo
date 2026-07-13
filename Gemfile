@@ -76,6 +76,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "database_cleaner-active_record"
+  gem "rspec-retry"
 end
 
 gem "tailwindcss-rails", "~> 4.4"
