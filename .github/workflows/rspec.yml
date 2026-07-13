@@ -67,3 +67,11 @@ jobs:
           name: capybara-screenshots
           path: tmp/capybara
           retention-days: 3
+
+      - name: Upload test log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-log
+          path: log/test.log
+          retention-days: 3
