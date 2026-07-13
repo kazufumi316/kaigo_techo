@@ -31,6 +31,7 @@ RSpec.shared_context "見守り家族作成" do
     @dammy_name = Faker::Name.name
     @dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
     fill_in 'care_user_name', with: @dammy_name
+    fill_in 'care_user_name', with: @dammy_name if find_field('care_user_name').value.blank?
     fill_in 'care_user_birthday', with: @dammy_date
     select 'A型', from: 'care_user_blood_type'
     click_on '登録'
@@ -46,6 +47,7 @@ RSpec.shared_context "見守り家族2人目作成" do
     @dammy_name_2 = Faker::Name.name
     @dammy_date_2 = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
     fill_in 'care_user_name', with: @dammy_name_2
+    fill_in 'care_user_name', with: @dammy_name_2 if find_field('care_user_name').value.blank?
     fill_in 'care_user_birthday', with: @dammy_date_2
     select 'B型', from: 'care_user_blood_type'
     click_on '登録'
