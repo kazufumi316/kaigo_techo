@@ -1,122 +1,102 @@
-RSpec.describe '介護記録新規登録', type: :system do
-  describe '介護記録が新規登録できること' do
-    let(:user) { create(:user) }
-    it "介護記録新規登録成功したらホーム画面に遷移すること" do
-      visit new_user_session_path
-      fill_in 'メールアドレス', with: user.email
-      fill_in 'パスワード', with: 'password'
-      click_button "ログイン"
-      expect(page).to have_current_path(homes_path, wait: 5)
-      click_on '見守り家族登録'
-      dammy_name = Faker::Name.name
-      dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
-      fill_in 'care_user_name', with: dammy_name
-      fill_in 'care_user_birthday', with: dammy_date
-      select 'A型', from: 'care_user_blood_type'
-      click_on '登録'
-      expect(page).to have_current_path(care_users_path, wait: 5)
-      click_on '戻る'
-      click_on '記録をつける'
-      click_on dammy_name
-      click_on '変わらない'
-      sleep 1
-      click_on '変わらない'
-      click_on '変わらない'
-      click_on '記録する'
-      expect(page).to have_current_path(homes_path, wait: 5)
+require 'rails_helper'
+
+RSpec.describe '介護記録作成', type: :system do
+  describe '介護記録作成1人の場合' do
+    include_context 'アカウントログイン'
+    include_context '見守り家族作成'
+    include_context '介護記録作成'
+    it '介護記録作成成功' do
+      expect(page).to have_current_path(homes_path)
       expect(page).to have_content "介護記録をつけました"
     end
-  end
 
-  describe '介護記録が確認ができる' do
-    let(:user) { create(:user) }
-    it "介護記録一覧ページに遷移できる" do
-      visit new_user_session_path
-      fill_in 'メールアドレス', with: user.email
-      fill_in 'パスワード', with: 'password'
-      click_button "ログイン"
-      expect(page).to have_current_path(homes_path, wait: 5)        
-      click_on '見守り家族登録'
-      dammy_name = Faker::Name.name
-      dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
-      fill_in 'care_user_name', with: dammy_name
-      fill_in 'care_user_birthday', with: dammy_date
-      select 'A型', from: 'care_user_blood_type'
-      click_on "登録"
-      expect(page).to have_current_path(care_users_path, wait: 5)
-      click_on '戻る'
-      click_on '記録をつける'
-      click_on dammy_name
-      click_on '変わらない'
-      click_on '変わらない'
-      click_on '変わらない'
-      click_on '記録する'
-      expect(page).to have_current_path(homes_path, wait: 5)
-      click_on '記録を見る'
-      click_on dammy_name
-      expect(page).to have_content('介護記録一覧')
+    context '介護記録作成2人以上の場合' do
+      include_context '見守り家族2人目作成'
+      include_context '介護記録作成2人目'
+      it '介護記録作成成功' do
+        expect(page).to have_current_path(homes_path)
+        expect(page).to have_content "介護記録をつけました"
+      end
     end
   end
 
-  describe '介護記録が確認ができる' do
-    let(:user) { create(:user) }
-    it "介護記録詳細ページに遷移できる" do
-      visit new_user_session_path
-      fill_in 'メールアドレス', with: user.email
-      fill_in 'パスワード', with: 'password'
-      click_button "ログイン"
-      expect(page).to have_current_path(homes_path, wait: 5)
-      click_on '見守り家族登録'
-      dammy_name = Faker::Name.name
-      dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
-      fill_in 'care_user_name', with: dammy_name
-      fill_in 'care_user_birthday', with: dammy_date
-      select 'A型', from: 'care_user_blood_type'
-      click_on "登録"
-      expect(page).to have_current_path(care_users_path, wait: 5)
-      click_on '戻る'
+  describe '介護記録作成失敗' do
+    include_context 'アカウントログイン'
+    include_context '見守り家族作成'
+    it '介護記録作成失敗' do
+      visit homes_path
       click_on '記録をつける'
-      click_on dammy_name
-      click_on '変わらない'
-      click_on '変わらない'
-      click_on '変わらない'
+      visit memo_care_records_path
       click_on '記録する'
-      expect(page).to have_current_path(homes_path, wait: 5)
+      expect(page).to have_current_path(memo_care_records_path)
+      expect(page).to have_content "介護記録が\n作成できませんでした"
+    end
+  end
+end
+
+RSpec.describe '介護記録一覧', type: :system do
+  describe '介護記録一覧' do
+    include_context 'アカウントログイン'
+    include_context '見守り家族作成'
+    include_context '介護記録作成'
+    it '介護記録一覧1人の場合' do
       click_on '記録を見る'
-      click_on dammy_name
+      expect(page).to have_current_path(%r{/care_records\?care_user_id=\d+})
+      expect(page).to have_content('介護記録一覧')
+    end
+
+    context '介護記録一覧' do
+      include_context '見守り家族2人目作成'
+      include_context '介護記録作成2人目'
+      it '介護記録一覧2人の場合' do
+        click_on '記録を見る'
+        click_on @dammy_name_2
+        expect(page).to have_current_path(%r{/care_records\?care_user_id=\d+})
+        expect(page).to have_content('介護記録一覧')
+      end
+    end
+  end
+end
+
+RSpec.describe '介護記録詳細', type: :system do
+  describe '介護記録詳細' do
+    include_context 'アカウントログイン'
+    include_context '見守り家族作成'
+    include_context '介護記録作成'
+    it '介護記録詳細1人の場合' do
+      visit homes_path
+      click_on '記録を見る'
       latest_record = CareRecord.last
       target_date = latest_record.created_at.strftime('%-m月%-d日 %-H時%M分')
       click_on target_date
+      expect(page).to have_current_path(%r{/care_records/\d+})
       expect(page).to have_content('介護記録詳細')
     end
-  end
 
-  describe '介護記録が編集ができる' do
-    let(:user) { create(:user) }
-    it "介護記録編集後に個別の介護記録一覧に遷移できる" do
-      visit new_user_session_path
-      fill_in 'メールアドレス', with: user.email
-      fill_in 'パスワード', with: 'password'
-      click_button "ログイン"
-      expect(page).to have_current_path(homes_path, wait: 5)
-      click_on '見守り家族登録'
-      dammy_name = Faker::Name.name
-      dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
-      fill_in 'care_user_name', with: dammy_name
-      fill_in 'care_user_birthday', with: dammy_date
-      select 'A型', from: 'care_user_blood_type'
-      click_on "登録"
-      expect(page).to have_current_path(care_users_path, wait: 5)
-      click_on '戻る'
-      click_on '記録をつける'
-      click_on dammy_name
-      click_on '変わらない'
-      click_on '変わらない'
-      click_on '変わらない'
-      click_on '記録する'
-      expect(page).to have_current_path(homes_path, wait: 5)
+    context '介護記録詳細' do
+      include_context '見守り家族2人目作成'
+      include_context '介護記録作成2人目'
+      it '介護記録詳細2人の場合' do
+        visit homes_path
+        click_on '記録を見る'
+        click_on @dammy_name_2
+        latest_record = CareRecord.last
+        target_date = latest_record.created_at.strftime('%-m月%-d日 %-H時%M分')
+        click_on target_date
+        expect(page).to have_current_path(%r{/care_records/\d+})
+        expect(page).to have_content('介護記録詳細')
+      end
+    end
+  end
+end
+
+RSpec.describe '介護記録編集', type: :system do
+  describe '介護記録編集ができる' do
+    include_context 'アカウントログイン'
+    include_context '見守り家族作成'
+    include_context '介護記録作成'
+    it '介護記録編集成功' do
       click_on '記録を見る'
-      click_on dammy_name
       latest_record = CareRecord.last
       target_date = latest_record.created_at.strftime('%-m月%-d日 %-H時%M分')
       click_on target_date
@@ -133,36 +113,16 @@ RSpec.describe '介護記録新規登録', type: :system do
 end
 
 RSpec.describe '介護記録削除', type: :system do
-  describe '介護記録が削除できること' do
-    let(:user) { create(:user) }
-    it "介護記録削除に成功したら個別記録一覧に遷移すること" do
-      visit new_user_session_path
-      fill_in 'メールアドレス', with: user.email
-      fill_in 'パスワード', with: 'password'
-      click_button "ログイン"
-      expect(page).to have_current_path(homes_path, wait: 5)
-      click_on '見守り家族登録'
-      dammy_name = Faker::Name.name
-      dammy_date = Faker::Date.between(from: '1940-01-01', to: '1960-01-01')
-      fill_in 'care_user_name', with: dammy_name
-      fill_in 'care_user_birthday', with: dammy_date
-      select 'A型', from: 'care_user_blood_type'
-      click_on '登録'
-      expect(page).to have_current_path(care_users_path, wait: 5)
-      click_on '戻る'
-      click_on '記録をつける'
-      click_on dammy_name
-      click_on '変わらない'
-      click_on '変わらない'
-      click_on '変わらない'
-      click_on '記録する'
-      expect(page).to have_current_path(homes_path, wait: 5)
+  describe '介護記録編集ができる' do
+    include_context 'アカウントログイン'
+    include_context '見守り家族作成'
+    include_context '介護記録作成'
+    it '介護記録編集成功' do
       click_on '記録を見る'
-      click_on dammy_name
       latest_record = CareRecord.last
       target_date = latest_record.created_at.strftime('%-m月%-d日 %-H時%M分')
       click_on target_date
-      accept_confirm(wait: 5) do
+      accept_confirm do
         click_on "介護記録削除"
       end
       expect(page).to have_current_path(%r{/care_records/\d+})
