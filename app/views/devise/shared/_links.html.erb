@@ -1,5 +1,5 @@
 <%- if controller_name != 'sessions' %>
-  <p><%= link_to "ログインページ", new_session_path(resource_name),class: "w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %></p>
+  <p><%= link_to "ログインページ", new_session_path(resource_name),class: "mb-4 w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %></p>
 <% end %>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
@@ -8,8 +8,7 @@
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
   <p>
-    <%= link_to "#",class: "w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" do %>
-    <%# new_password_path(resource_name) %>
+    <%= link_to new_password_path(resource_name), class: "w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-green-500 hover:bg-green-300 font-bold rounded-lg" do %>
       パスワードを<br>忘れた方
     <% end %>
   </p>

@@ -1,16 +1,27 @@
-<h2>Forgot your password?</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
+<div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
+  <div class="text-4xl text-center font-bold">
+    <h1>パスワードを忘れた方へ</h1>
+  </div>
+  <div class="mt-1 text-3xl text-center font-bold">
+    <h1>パスワード再設定メール送信</h1>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Send me password reset instructions" %>
-  </div>
-<% end %>
+  <div class="w-full max-w-md text-3xl text-gray-700">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-<%= render "devise/shared/links" %>
+      <div class="field mt-4 mb-5">
+        <p class="font-bold mb-1"><%= f.label :email %></p>
+        <p><%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500"  %></p>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "送信する", class: "mb-10 w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-green-500 hover:bg-green-300 font-bold rounded-lg cursor-pointer" %>
+      </div>
+
+      <div class="text-center mt-4 text-sm">
+        <%= render "devise/shared/links" %>
+      </div>
+    <% end %>
+  </div>
+</div>
