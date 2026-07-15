@@ -5,18 +5,18 @@ Rails.application.routes.draw do
 
   get "users/show"
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: "users/registrations"
   }
 
   devise_scope :users do
-    get '/users', to: redirect("/users/sign_up")
+    get "/users", to: redirect("/users/sign_up")
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :homes, only: [:index]
-  resources :users, only: [:show]
-  resources :care_users, only: [:index, :new, :create, :show, :edit, :update, :destroy]
-  resources :care_records, only: [:index, :create, :show, :edit, :update, :destroy] do
+  resources :homes, only: [ :index ]
+  resources :users, only: [ :show ]
+  resources :care_users, only: [ :index, :new, :create, :show, :edit, :update, :destroy ]
+  resources :care_records, only: [ :index, :create, :show, :edit, :update, :destroy ] do
     collection do
       get :create_select_care_user
       patch :save_create_select_care_user
@@ -30,9 +30,9 @@ Rails.application.routes.draw do
       get :view_select_care_user
     end
   end
-  resources :connect_care_users, only: [:new, :create]
+  resources :connect_care_users, only: [ :new, :create ]
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root 'static_pages#top'
+  root "static_pages#top"
 end

@@ -68,7 +68,7 @@ RSpec.describe 'アカウント編集', type: :system do
   end
 end
 
-RSpec.describe 'アカウント削除', type: :system do    
+RSpec.describe 'アカウント削除', type: :system do
   describe 'アカウント削除に成功' do
     include_context 'アカウント登録'
     it "アカウント削除が成功しトップページに遷移すること" do

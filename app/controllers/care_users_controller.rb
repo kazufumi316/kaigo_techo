@@ -1,10 +1,9 @@
 class CareUsersController < ApplicationController
-
   before_action :authenticate_user!
-  before_action :set_family_ids, only: [:index, :show, :edit, :update]
-  before_action :set_care_user, only: [:show, :edit, :update]
-  before_action :set_care_users, only: [:index, :show]
-  
+  before_action :set_family_ids, only: [ :index, :show, :edit, :update ]
+  before_action :set_care_user, only: [ :show, :edit, :update ]
+  before_action :set_care_users, only: [ :index, :show ]
+
   def new
     @care_user = CareUser.new
     @family = @care_user.build_family
@@ -16,7 +15,7 @@ class CareUsersController < ApplicationController
     family = @care_user.build_family(family_name: @care_user.name)
     family.family_members.build(user_id: current_user.id, role: "main")
     if @care_user.save
-      redirect_to care_users_path, notice: '見守り家族の登録に成功しました'
+      redirect_to care_users_path, notice: "見守り家族の登録に成功しました"
     else
       logger.error @care_user.errors.full_messages
       flash.now[:alert] = "入力にエラーがあります"
@@ -70,11 +69,11 @@ class CareUsersController < ApplicationController
 
   def care_user_params
     params.require(:care_user).permit(
-      :name, 
-      :birthday, 
-      :blood_type, 
-      :medical_condition_1, 
-      :medical_condition_2, 
+      :name,
+      :birthday,
+      :blood_type,
+      :medical_condition_1,
+      :medical_condition_2,
       :medical_condition_3
     )
   end
