@@ -8,7 +8,8 @@ RUN apt-get update -qq && apt-get install -y \
     build-essential \
     libpq-dev \
     nodejs \
-    postgresql-client && \
+    postgresql-client \
+    nano && \
     rm -rf /var/lib/apt/lists/*
 
 # 作業ディレクトリ作成
