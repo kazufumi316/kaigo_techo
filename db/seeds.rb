@@ -44,7 +44,7 @@ care_user_2 = CareUser.create!(
   family: family_2
 )
 
-care_users = [care_user_1, care_user_2]
+care_users = [ care_user_1, care_user_2 ]
 
 20.times do
   CareRecord.create!(

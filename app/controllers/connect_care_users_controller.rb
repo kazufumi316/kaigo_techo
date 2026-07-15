@@ -1,9 +1,8 @@
 class ConnectCareUsersController < ApplicationController
-
   before_action :authenticate_user!
 
   def new;end
-  
+
   def create
     care_user = CareUser.find_by(invite_code: params[:invite_code].upcase)
 

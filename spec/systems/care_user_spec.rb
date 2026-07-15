@@ -17,10 +17,10 @@ RSpec.describe '見守り家族登録', type: :system do
       end
     end
   end
-    
+
   describe '見守り家族の新規登録' do
     include_context "アカウントログイン"
-    it '見守り家族新規登録失敗' do       
+    it '見守り家族新規登録失敗' do
         click_on '見守り家族登録'
         fill_in 'care_user_name', with: ""
         fill_in 'care_user_birthday', with: ""

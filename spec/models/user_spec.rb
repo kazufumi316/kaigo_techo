@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
   describe '#create' do
     it "アカウント登録ができること" do
       user = build(:user)

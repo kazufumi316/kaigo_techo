@@ -1,9 +1,8 @@
 class CareRecordsController < ApplicationController
-
   before_action :authenticate_user!
-  before_action :set_care_record_session, only: [:create_select_care_user, :health_status, :appetite, :sleep_quality, :memo]
-  before_action :set_save_care_record_session, only: [:save_create_select_care_user, :save_health_status, :save_appetite, :save_sleep_quality]
-  before_action :set_care_record, only: [:show, :edit, :update]
+  before_action :set_care_record_session, only: [ :create_select_care_user, :health_status, :appetite, :sleep_quality, :memo ]
+  before_action :set_save_care_record_session, only: [ :save_create_select_care_user, :save_health_status, :save_appetite, :save_sleep_quality ]
+  before_action :set_care_record, only: [ :show, :edit, :update ]
 
   def create_select_care_user
     if current_user.families.count == 1
@@ -20,7 +19,7 @@ class CareRecordsController < ApplicationController
   end
 
   def save_create_select_care_user
-    session[:care_record_attributes] = { care_user_id: params[:care_record][:care_user_id]}
+    session[:care_record_attributes] = { care_user_id: params[:care_record][:care_user_id] }
     redirect_to health_status_care_records_path
   end
 
@@ -55,7 +54,7 @@ class CareRecordsController < ApplicationController
     @care_record = current_user.care_records.build(final_params)
     if @care_record.save
       session.delete(:care_record_attributes)
-      redirect_to homes_path, notice: '介護記録をつけました'
+      redirect_to homes_path, notice: "介護記録をつけました"
     else
       logger.error @care_record.errors.full_messages
 
@@ -130,7 +129,7 @@ class CareRecordsController < ApplicationController
       return
     end
     record_care_user_id = care_record.care_user_id
-    record_created_at = care_record.created_at.strftime('%-m月%-d日 %-H時%M分')
+    record_created_at = care_record.created_at.strftime("%-m月%-d日 %-H時%M分")
     care_record.destroy!
     redirect_to care_records_path(care_user_id: record_care_user_id), notice: "#{record_created_at}\n介護記録を削除しました", status: :see_other
   end
