@@ -3,7 +3,7 @@ module Admin
     before_action :set_care_user, only: [ :show, :destroy ]
 
     def index
-      @care_users = CareUser.order(created_at: :desc).page(params[:page])
+      @care_users = CareUser.includes(family: :family_members).order(created_at: :desc).page(params[:page])
     end
 
     def show
