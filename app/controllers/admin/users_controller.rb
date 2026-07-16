@@ -3,7 +3,9 @@ module Admin
     before_action :set_user, only: [ :show, :destroy ]
 
     def index
-      @users = User.order(created_at: :desc).page(params[:page])
+      @users = User.order(created_at: :desc)
+      @users = @users.where("name ILIKE ?", "%#{params[:name]}%") if params[:name].present?
+      @users = @users.page(params[:page])
     end
 
     def show

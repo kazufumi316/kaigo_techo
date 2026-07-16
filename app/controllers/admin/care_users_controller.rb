@@ -3,7 +3,9 @@ module Admin
     before_action :set_care_user, only: [ :show, :destroy ]
 
     def index
-      @care_users = CareUser.includes(family: :family_members).order(created_at: :desc).page(params[:page])
+      @care_users = CareUser.includes(family: :family_members).order(created_at: :desc)
+      @care_users = @care_users.where("name ILIKE ?", "%#{params[:name]}%") if params[:name].present?
+      @care_users = @care_users.page(params[:page])
     end
 
     def show
