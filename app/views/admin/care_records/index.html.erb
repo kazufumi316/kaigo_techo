@@ -1,0 +1,36 @@
+<h1 class="text-2xl font-bold mb-6">介護記録一覧</h1>
+
+<%= form_with url: admin_care_records_path, method: :get, class: "mb-4 flex gap-2" do %>
+  <%= text_field_tag :care_user_name, params[:care_user_name], placeholder: "見守り家族名で検索", class: "border border-gray-300 rounded px-3 py-2 flex-1" %>
+  <%= text_field_tag :user_name, params[:user_name], placeholder: "記録者名で検索", class: "border border-gray-300 rounded px-3 py-2 flex-1" %>
+  <%= submit_tag "検索", class: "px-4 py-2 bg-blue-500 hover:bg-blue-400 text-white font-bold rounded" %>
+<% end %>
+
+<div class="bg-white rounded-lg shadow overflow-x-auto">
+  <table class="min-w-full text-sm">
+    <thead class="bg-gray-50 text-left text-gray-500">
+      <tr>
+        <th class="px-4 py-3">記録日時</th>
+        <th class="px-4 py-3">見守り家族</th>
+        <th class="px-4 py-3">記録者</th>
+        <th class="px-4 py-3">特記事項</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y">
+      <% @care_records.each do |care_record| %>
+        <tr>
+          <td class="px-4 py-3">
+            <%= link_to care_record.created_at.strftime("%Y/%m/%d %H:%M"), admin_care_record_path(care_record), class: "text-blue-600 hover:underline" %>
+          </td>
+          <td class="px-4 py-3"><%= care_record.care_user.name %></td>
+          <td class="px-4 py-3"><%= care_record.user.name %></td>
+          <td class="px-4 py-3"><%= truncate(care_record.memo, length: 8) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-6">
+  <%= paginate @care_records %>
+</div>
