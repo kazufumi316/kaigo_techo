@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :families, through: :family_members
   has_many :care_users, through: :families
 
+  enum :role, { general: 0, admin: 1 }
+
   validates :name,       presence: true
   validates :tel_number, presence: true, uniqueness: true
 

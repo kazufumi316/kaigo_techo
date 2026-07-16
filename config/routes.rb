@@ -32,6 +32,13 @@ Rails.application.routes.draw do
   end
   resources :connect_care_users, only: [ :new, :create ]
 
+  namespace :admin do
+    root to: "dashboard#index"
+    resources :users, only: [ :index, :show, :destroy ]
+    resources :care_users, only: [ :index, :show, :destroy ]
+    resources :care_records, only: [ :index, :show, :destroy ]
+  end
+
   # Defines the root path route ("/")
   # root "articles#index"
   root "static_pages#top"

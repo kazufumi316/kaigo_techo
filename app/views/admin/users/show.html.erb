@@ -1,0 +1,50 @@
+<h1 class="text-2xl font-bold mb-6">ユーザー詳細</h1>
+
+<div class="bg-white rounded-lg shadow p-6 mb-6">
+  <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <dt class="text-sm text-gray-500"><%= User.human_attribute_name(:name) %></dt>
+      <dd class="text-lg"><%= @user.name %></dd>
+    </div>
+    <div>
+      <dt class="text-sm text-gray-500"><%= User.human_attribute_name(:tel_number) %></dt>
+      <dd class="text-lg"><%= @user.tel_number %></dd>
+    </div>
+    <div>
+      <dt class="text-sm text-gray-500"><%= User.human_attribute_name(:email) %></dt>
+      <dd class="text-lg"><%= @user.email %></dd>
+    </div>
+    <div>
+      <dt class="text-sm text-gray-500">権限</dt>
+      <dd class="text-lg"><%= @user.admin? ? "管理者" : "一般" %></dd>
+    </div>
+    <div>
+      <dt class="text-sm text-gray-500">登録日</dt>
+      <dd class="text-lg"><%= @user.created_at.strftime("%Y/%m/%d") %></dd>
+    </div>
+  </dl>
+</div>
+
+<div class="bg-white rounded-lg shadow p-6 mb-6">
+  <h2 class="text-lg font-bold mb-4">紐づいている見守り家族</h2>
+  <% if @care_users.any? %>
+    <ul class="divide-y">
+      <% @care_users.each do |care_user| %>
+        <li class="py-2">
+          <%= link_to care_user.name, admin_care_user_path(care_user), class: "text-blue-600 hover:underline" %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-gray-500">紐づいている見守り家族はいません</p>
+  <% end %>
+</div>
+
+<div class="flex items-center gap-4">
+  <%= link_to "一覧に戻る", admin_users_path, class: "px-6 py-3 bg-gray-500 hover:bg-gray-400 text-white font-bold rounded-lg" %>
+
+  <%= button_to "ユーザー削除", admin_user_path(@user),
+                data: { turbo_confirm: "本当に削除しますか?\n このユーザーの家族参加情報と、このユーザーが\n 記録した介護記録も削除されますがよろしいですか?" },
+                method: :delete,
+                class: "px-6 py-3 bg-red-500 hover:bg-red-400 text-white font-bold rounded-lg" %>
+</div>

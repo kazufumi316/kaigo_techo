@@ -85,5 +85,4 @@ test:
 production:
   <<: *default
   database: kaigo_techo_production
-  username: kaigo_techo
-  password: <%= ENV["KAIGO_TECHO_DATABASE_PASSWORD"] %>
+  prepared_statements: false

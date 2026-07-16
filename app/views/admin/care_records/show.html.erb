@@ -1,0 +1,43 @@
+<h1 class="text-2xl font-bold mb-6">介護記録詳細</h1>
+
+<div class="bg-white rounded-lg shadow p-6 mb-6">
+  <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <dt class="text-sm text-gray-500">記録日時</dt>
+      <dd class="text-lg"><%= @care_record.created_at.strftime("%Y/%m/%d %H:%M") %></dd>
+    </div>
+    <div>
+      <dt class="text-sm text-gray-500">見守り家族</dt>
+      <dd class="text-lg"><%= link_to @care_record.care_user.name, admin_care_user_path(@care_record.care_user), class: "text-blue-600 hover:underline" %></dd>
+    </div>
+    <div>
+      <dt class="text-sm text-gray-500">記録者</dt>
+      <dd class="text-lg"><%= link_to @care_record.user.name, admin_user_path(@care_record.user), class: "text-blue-600 hover:underline" %></dd>
+    </div>
+    <div>
+      <dt class="text-sm text-gray-500">体調</dt>
+      <dd class="text-lg"><%= @care_record.health_status %></dd>
+    </div>
+    <div>
+      <dt class="text-sm text-gray-500">食欲</dt>
+      <dd class="text-lg"><%= @care_record.appetite %></dd>
+    </div>
+    <div>
+      <dt class="text-sm text-gray-500">睡眠</dt>
+      <dd class="text-lg"><%= @care_record.sleep_quality %></dd>
+    </div>
+    <div class="sm:col-span-2">
+      <dt class="text-sm text-gray-500">特記事項</dt>
+      <dd class="text-lg whitespace-pre-line"><%= @care_record.memo %></dd>
+    </div>
+  </dl>
+</div>
+
+<div class="flex items-center gap-4">
+  <%= link_to "一覧に戻る", admin_care_records_path, class: "px-6 py-3 bg-gray-500 hover:bg-gray-400 text-white font-bold rounded-lg" %>
+
+  <%= button_to "介護記録削除", admin_care_record_path(@care_record),
+                data: { turbo_confirm: "本当に削除しますか?" },
+                method: :delete,
+                class: "px-6 py-3 bg-red-500 hover:bg-red-400 text-white font-bold rounded-lg" %>
+</div>
