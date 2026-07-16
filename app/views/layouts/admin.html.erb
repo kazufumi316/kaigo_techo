@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>管理画面 | おやこうこうかん日記</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <%= favicon_link_tag "icon.png" %>
+  </head>
+
+  <body class="bg-gray-100 min-h-screen">
+    <header class="bg-gray-800 text-white">
+      <nav class="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-4 h-16 px-4">
+        <div class="flex items-center gap-6">
+          <%= link_to "管理画面", admin_root_path, class: "font-bold" %>
+          <%= link_to "ユーザー", admin_users_path, class: "text-gray-300 hover:text-white" %>
+          <%= link_to "見守り家族", admin_care_users_path, class: "text-gray-300 hover:text-white" %>
+          <%= link_to "介護記録", admin_care_records_path, class: "text-gray-300 hover:text-white" %>
+        </div>
+        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-sm bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded" %>
+      </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8">
+      <% if flash.any? %>
+        <div class="mb-4">
+          <% flash.each do |type, message| %>
+            <div class="<%= type.to_s == "notice" ? "text-green-600" : "text-red-600" %> font-bold whitespace-pre-line"><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>
