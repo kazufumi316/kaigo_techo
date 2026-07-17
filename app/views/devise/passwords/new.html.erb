@@ -6,6 +6,14 @@
     <h1>パスワード再設定メール送信</h1>
   </div>
 
+  <div class="w-full max-w-md mt-4 p-4 font-bold bg-white border border-red-500 rounded-lg text-xl text-gray-700 leading-relaxed">
+    <p>
+      ご本人でのお手続きが難しい場合は、<br>
+      ご登録のメールアドレスをご存知のご家族が<br>
+      代わりに再設定を行うこともできます。
+    </p>
+  </div>
+
   <div class="w-full max-w-md text-3xl text-gray-700">
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
