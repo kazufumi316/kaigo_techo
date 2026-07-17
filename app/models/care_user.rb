@@ -13,10 +13,16 @@ class CareUser < ApplicationRecord
   validates :medical_condition_2, length: { maximum: 50 }
   validates :medical_condition_3, length: { maximum: 50 }
   validates :invite_code, length: { is: 6 }
+  validate :birthday_cannot_be_in_future
 
   enum :blood_type, { A型: 0, B型: 1, O型: 2, AB型: 3, 不明: 4 }
 
   private
+
+  def birthday_cannot_be_in_future
+    return if birthday.blank?
+    errors.add(:birthday, "は未来の日付にできません") if birthday > Date.current
+  end
 
   def generate_invite_code
     loop do
