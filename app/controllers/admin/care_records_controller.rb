@@ -3,7 +3,7 @@ module Admin
     before_action :set_care_record, only: [ :show, :destroy ]
 
     def index
-      @care_records = CareRecord.includes(:user, :care_user).order(created_at: :desc)
+      @care_records = CareRecord.includes(:user, :care_user).order(save_day: :desc)
       if params[:care_user_name].present?
         @care_records = @care_records.joins(:care_user).where("care_users.name ILIKE ?", "%#{params[:care_user_name]}%")
       end

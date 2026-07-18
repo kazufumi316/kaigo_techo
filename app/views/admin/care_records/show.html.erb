@@ -3,8 +3,8 @@
 <div class="bg-white rounded-lg shadow p-6 mb-6">
   <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <div>
-      <dt class="text-sm text-gray-500">記録日時</dt>
-      <dd class="text-lg"><%= @care_record.created_at.strftime("%Y/%m/%d %H:%M") %></dd>
+      <dt class="text-sm text-gray-500">記録日</dt>
+      <dd class="text-lg"><%= @care_record.save_day.strftime("%Y/%m/%d") %></dd>
     </div>
     <div>
       <dt class="text-sm text-gray-500">見守り家族</dt>

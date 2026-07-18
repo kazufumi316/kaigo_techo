@@ -10,12 +10,12 @@
           <%= f.button care_user.name,
                 type: "submit",
                 name: "care_record[care_user_id]",
-                value: care_user.id, 
+                value: care_user.id,
                 class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
         <% end %>
       </div>
     <% end %>
-  
+
   <% else %>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
       <div class="col-span-full text-center text-4xl mb-5 font-bold">見守り家族の登録は<br>ありません</div>

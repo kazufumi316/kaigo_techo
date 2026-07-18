@@ -1,15 +1,15 @@
 class CareRecordsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_care_record_session, only: [ :create_select_care_user, :health_status, :appetite, :sleep_quality, :memo ]
-  before_action :set_save_care_record_session, only: [ :save_create_select_care_user, :save_health_status, :save_appetite, :save_sleep_quality ]
+  before_action :set_care_record_session, only: [ :create_select_care_user, :save_day, :health_status, :appetite, :sleep_quality, :memo ]
+  before_action :set_save_care_record_session, only: [ :save_create_select_care_user, :save_save_day, :save_health_status, :save_appetite, :save_sleep_quality ]
   before_action :set_care_record, only: [ :show, :edit, :update ]
 
   def create_select_care_user
     if current_user.families.count == 1
       family_ids = current_user.family_members.pluck(:family_id)
       @care_users = CareUser.where(family_id: family_ids)
-      session[:care_record_attributes] = { care_user_id: @care_users.first.id }
-      redirect_to health_status_care_records_path and return
+      session[:care_record_attributes][:care_user_id] = @care_users.first.id
+      redirect_to save_day_care_records_path and return
     elsif current_user.families.count > 1
       family_ids = current_user.family_members.pluck(:family_id)
       @care_users = CareUser.where(family_id: family_ids)
@@ -25,7 +25,14 @@ class CareRecordsController < ApplicationController
       redirect_to create_select_care_user_care_records_path, alert: "見守り家族を選択してください"
       return
     end
-    session[:care_record_attributes] = { care_user_id: care_user_id }
+    session[:care_record_attributes][:care_user_id] = care_user_id
+    redirect_to save_day_care_records_path
+  end
+
+  def save_day;end
+
+  def save_save_day
+    session[:care_record_attributes][:save_day] = params[:care_record][:save_day]
     redirect_to health_status_care_records_path
   end
 
@@ -92,7 +99,7 @@ class CareRecordsController < ApplicationController
         return
       end
       @care_user = @care_users.find(params[:care_user_id])
-      @care_records = CareRecord.includes(:user, :care_user).where(care_user_id: @care_user.id).order(created_at: :desc)
+      @care_records = CareRecord.includes(:user, :care_user).where(care_user_id: @care_user.id).order(save_day: :desc)
     else
       @care_records = CareRecord.none
     end
@@ -110,7 +117,7 @@ class CareRecordsController < ApplicationController
     end
     start_date = @target_date.beginning_of_month
     end_date = @target_date.end_of_month
-    @reports = @care_records.where(created_at: start_date..end_date).order(created_at: :asc)
+    @reports = @care_records.where(save_day: start_date..end_date).order(save_day: :asc)
     @prev_month = @target_date.prev_month
     @next_month = @target_date.next_month
   end
@@ -127,7 +134,7 @@ class CareRecordsController < ApplicationController
   def update
     if @care_record.update(care_record_params)
       redirect_to care_records_path(care_user_id: @care_record.care_user.id),
-                  notice: "#{@care_record.created_at.strftime('%-m月%-d日 %-H時%M分')}\n介護記録を更新しました"
+                  notice: "#{@care_record.save_day.strftime('%-m月%-d日')}\n介護記録を更新しました"
     else
       flash.now[:alert] = "介護記録の更新に\n失敗しました"
       render :edit, status: :unprocessable_entity
@@ -141,9 +148,9 @@ class CareRecordsController < ApplicationController
       return
     end
     record_care_user_id = care_record.care_user_id
-    record_created_at = care_record.created_at.strftime("%-m月%-d日 %-H時%M分")
+    record_save_day = care_record.save_day.strftime("%-m月%-d日")
     care_record.destroy!
-    redirect_to care_records_path(care_user_id: record_care_user_id), notice: "#{record_created_at}\n介護記録を削除しました", status: :see_other
+    redirect_to care_records_path(care_user_id: record_care_user_id), notice: "#{record_save_day}\n介護記録を削除しました", status: :see_other
   end
 
   private
@@ -154,7 +161,8 @@ class CareRecordsController < ApplicationController
       :appetite,
       :sleep_quality,
       :memo,
-      :care_user_id
+      :care_user_id,
+      :save_day
     )
   end
 

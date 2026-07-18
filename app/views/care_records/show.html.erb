@@ -7,26 +7,25 @@
 
   <div class="w-full max-w-md text-3xl text-gray-700 mt-8">
     <div class="field mb-5">
-      <p class="font-bold mb-1">記録日時</p>
-      <p class="font-bold w-full p-3"><%= @care_record.created_at.strftime('%-m月%-d日 %-H時%M分')  %></p>
+      <p class="font-bold mb-1">記録日：<%= @care_record.save_day.strftime('%-m月%-d日')  %></p>
     </div>
   </div>
   
   <div class="w-full max-w-md text-3xl text-gray-700">
     <div class="field mb-5">
-      <p class="font-bold mb-1">体調 : <%= @care_record.health_status %></p>
+      <p class="font-bold mb-1">体調　：<%= @care_record.health_status %></p>
     </div>
   </div>
 
   <div class="w-full max-w-md text-3xl text-gray-700">
     <div class="field mb-5">
-      <p class="font-bold mb-1">食欲 : <%= @care_record.appetite %></p>
+      <p class="font-bold mb-1">食欲　：<%= @care_record.appetite %></p>
     </div>
   </div>
 
   <div class="w-full max-w-md text-3xl text-gray-700">
     <div class="field mb-5">
-      <p class="font-bold mb-1">睡眠 : <%= @care_record.sleep_quality %></p>
+      <p class="font-bold mb-1">睡眠　：<%= @care_record.sleep_quality %></p>
     </div>
   </div>
 

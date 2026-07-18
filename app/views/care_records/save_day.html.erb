@@ -1,0 +1,18 @@
+<div class="flex flex-col items-center justify-start min-h-screen bg-orange-50 px-4 pt-5">
+  <div class="text-center text-4xl font-bold">
+    <h1>いつの記録ですか？</h1>
+  </div>
+
+  <%= render "shared/message" %>
+
+  <%= form_with model: @care_record, url: save_save_day_care_records_path, method: :patch, local: true do |f| %>
+    <div class="field mt-4 mb-5 w-full max-w-md mx-auto text-3xl text-gray-700">
+      <p><%= f.date_field :save_day, value: (@care_record.save_day || Date.current), class: "w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" %></p>
+    </div>
+    <%= f.submit "次へ", class: "w-75 mx-auto flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
+  <% end %>
+
+  <div class="mt-4 grid grid-cols-1 max-w-2xl">
+    <%= link_to "戻る", create_select_care_user_care_records_path, class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-gray-500 hover:bg-gray-300 font-bold rounded-lg" %>
+  </div>
+</div>
