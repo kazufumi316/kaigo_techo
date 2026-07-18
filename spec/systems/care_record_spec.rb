@@ -67,7 +67,7 @@ RSpec.describe '介護記録詳細', type: :system do
       visit homes_path
       click_on '記録を見る'
       latest_record = CareRecord.last
-      target_date = latest_record.created_at.strftime('%-d日')
+      target_date = latest_record.save_day.strftime('%-d日')
       click_on target_date
       expect(page).to have_current_path(%r{/care_records/\d+})
       expect(page).to have_content('介護記録詳細')
@@ -81,7 +81,7 @@ RSpec.describe '介護記録詳細', type: :system do
         click_on '記録を見る'
         click_on @dammy_name_2
         latest_record = CareRecord.last
-        target_date = latest_record.created_at.strftime('%-d日')
+        target_date = latest_record.save_day.strftime('%-d日')
         click_on target_date
         expect(page).to have_current_path(%r{/care_records/\d+})
         expect(page).to have_content('介護記録詳細')
@@ -98,7 +98,7 @@ RSpec.describe '介護記録編集', type: :system do
     it '介護記録編集成功' do
       click_on '記録を見る'
       latest_record = CareRecord.last
-      target_date = latest_record.created_at.strftime('%-d日')
+      target_date = latest_record.save_day.strftime('%-d日')
       click_on target_date
       click_on '編集'
       select '良い', from: 'care_record_health_status'
@@ -120,8 +120,8 @@ RSpec.describe '介護記録削除', type: :system do
     it '介護記録削除成功' do
       click_on '記録を見る'
       latest_record = CareRecord.last
-      target_date = latest_record.created_at.strftime('%-d日')
-      target_date_2 = latest_record.created_at.strftime('%-m月%-d日 %-H時%M分')
+      target_date = latest_record.save_day.strftime('%-d日')
+      target_date_2 = latest_record.save_day.strftime('%-m月%-d日')
       click_on target_date
       accept_confirm do
         click_on "介護記録削除"

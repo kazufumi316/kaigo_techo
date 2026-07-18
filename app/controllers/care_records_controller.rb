@@ -99,7 +99,7 @@ class CareRecordsController < ApplicationController
         return
       end
       @care_user = @care_users.find(params[:care_user_id])
-      @care_records = CareRecord.includes(:user, :care_user).where(care_user_id: @care_user.id).order(created_at: :desc)
+      @care_records = CareRecord.includes(:user, :care_user).where(care_user_id: @care_user.id).order(save_day: :desc)
     else
       @care_records = CareRecord.none
     end
@@ -117,7 +117,7 @@ class CareRecordsController < ApplicationController
     end
     start_date = @target_date.beginning_of_month
     end_date = @target_date.end_of_month
-    @reports = @care_records.where(created_at: start_date..end_date).order(created_at: :asc)
+    @reports = @care_records.where(save_day: start_date..end_date).order(save_day: :asc)
     @prev_month = @target_date.prev_month
     @next_month = @target_date.next_month
   end
@@ -134,7 +134,7 @@ class CareRecordsController < ApplicationController
   def update
     if @care_record.update(care_record_params)
       redirect_to care_records_path(care_user_id: @care_record.care_user.id),
-                  notice: "#{@care_record.created_at.strftime('%-m月%-d日 %-H時%M分')}\n介護記録を更新しました"
+                  notice: "#{@care_record.save_day.strftime('%-m月%-d日')}\n介護記録を更新しました"
     else
       flash.now[:alert] = "介護記録の更新に\n失敗しました"
       render :edit, status: :unprocessable_entity
@@ -148,9 +148,9 @@ class CareRecordsController < ApplicationController
       return
     end
     record_care_user_id = care_record.care_user_id
-    record_created_at = care_record.created_at.strftime("%-m月%-d日 %-H時%M分")
+    record_save_day = care_record.save_day.strftime("%-m月%-d日")
     care_record.destroy!
-    redirect_to care_records_path(care_user_id: record_care_user_id), notice: "#{record_created_at}\n介護記録を削除しました", status: :see_other
+    redirect_to care_records_path(care_user_id: record_care_user_id), notice: "#{record_save_day}\n介護記録を削除しました", status: :see_other
   end
 
   private

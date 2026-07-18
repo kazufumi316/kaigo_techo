@@ -7,12 +7,13 @@
 
     <div class="w-full max-w-md text-3xl text-gray-700">
       <div>
-        <p class="field mb-5 w-full flex font-bold"><%= f.label :作成日 %> :
-                                                    <%= @care_record.created_at.strftime('%-m月%-d日 %-H時%M分') %></p>
+        <p class="font-bold mb-4"><%= f.label :記録日 %> :
+          <%= f.date_field :save_day, class: "w-75 p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" %>
+        </p>
       </div>
 
-      <div class="field mb-5">
-        <p class="font-bold mb-1"><%= f.label :体調 %> :
+      <div class="field mb-4">
+        <p class="font-bold mb-1"><%= f.label :体調 %> 　:
           <%= f.select :health_status, 
                         CareRecord.health_statuses.keys,
                         {},
@@ -20,8 +21,8 @@
         </p>
       </div>
     
-      <div class="field mb-5">
-        <p class="font-bold mb-1"><%= f.label :食欲 %> :
+      <div class="field mb-4">
+        <p class="font-bold mb-1"><%= f.label :食欲 %> 　:
           <%= f.select :appetite, 
                         CareRecord.appetites.keys,
                         {},
@@ -29,8 +30,8 @@
         </p>
       </div>
 
-      <div class="field mb-5">
-        <p class="font-bold mb-1"><%= f.label :睡眠 %> :
+      <div class="field mb-4">
+        <p class="font-bold mb-1"><%= f.label :睡眠 %> 　:
           <%= f.select :sleep_quality, 
                         CareRecord.sleep_qualities.keys,
                         {},
@@ -39,7 +40,7 @@
       </div>
 
       <div>
-        <p class="field mb-5 w-full flex font-bold"><%= f.label :特記事項 %></p>
+        <p class="field mb-4 w-full flex font-bold"><%= f.label :特記事項 %></p>
         <p><%= f.text_area :memo, class: "w-full sm:w-100 h-40 sm:h-100 p-3 border border-gray-300 rounded-lg bg-white focus:outline-orange-500" %></p>
       </div>
     </div>

@@ -47,6 +47,7 @@ care_user_2 = CareUser.create!(
 care_users = [ care_user_1, care_user_2 ]
 
 20.times do
+  record_time = Faker::Time.between(from: 3.months.ago, to: Time.current)
   CareRecord.create!(
     health_status: CareRecord.health_statuses.keys.sample,
     appetite: CareRecord.appetites.keys.sample,
@@ -54,6 +55,7 @@ care_users = [ care_user_1, care_user_2 ]
     memo: Faker::Lorem.sentence,
     user: user,
     care_user: care_users.sample,
-    created_at: Faker::Time.between(from: 3.months.ago, to: Time.current)
+    created_at: record_time,
+    save_day: record_time.to_date
   )
 end

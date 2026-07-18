@@ -10,7 +10,7 @@
   <table class="min-w-full text-sm">
     <thead class="bg-gray-50 text-left text-gray-500">
       <tr>
-        <th class="px-4 py-3">記録日時</th>
+        <th class="px-4 py-3">記録日</th>
         <th class="px-4 py-3">見守り家族</th>
         <th class="px-4 py-3">記録者</th>
         <th class="px-4 py-3">特記事項</th>
@@ -20,7 +20,7 @@
       <% @care_records.each do |care_record| %>
         <tr>
           <td class="px-4 py-3">
-            <%= link_to care_record.created_at.strftime("%Y/%m/%d %H:%M"), admin_care_record_path(care_record), class: "text-blue-600 hover:underline" %>
+            <%= link_to care_record.save_day.strftime("%Y/%m/%d"), admin_care_record_path(care_record), class: "text-blue-600 hover:underline" %>
           </td>
           <td class="px-4 py-3"><%= care_record.care_user.name %></td>
           <td class="px-4 py-3"><%= care_record.user.name %></td>
