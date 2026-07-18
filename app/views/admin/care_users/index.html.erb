@@ -20,7 +20,7 @@
       <% @care_users.each do |care_user| %>
         <tr>
           <td class="px-4 py-3"><%= link_to care_user.name, admin_care_user_path(care_user), class: "text-blue-600 hover:underline" %></td>
-          <td class="px-4 py-3"><%= care_user.birthday.strftime("%Y/%m/%d") %></td>
+          <td class="px-4 py-3"><%= care_user.birthday.strftime("%Jf") %></td>
           <td class="px-4 py-3"><%= care_user.blood_type %></td>
           <td class="px-4 py-3">
             <% if care_user.family.family_members.empty? %>
