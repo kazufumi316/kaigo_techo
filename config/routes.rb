@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   resources :care_users, only: [ :index, :new, :create, :show, :edit, :update, :destroy ]
   resources :care_records, only: [ :index, :create, :show, :edit, :update, :destroy ] do
     collection do
+      get :save_day
+      patch :save_save_day
       get :create_select_care_user
       patch :save_create_select_care_user
       get :health_status

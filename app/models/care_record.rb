@@ -11,4 +11,13 @@ class CareRecord < ApplicationRecord
   validates :appetite, presence: true
   validates :sleep_quality, presence: true
   validates :memo, length: { maximum: 255 }
+  validates :save_day, presence: true
+
+  before_validation :set_default_save_day, on: :create
+
+  private
+
+  def set_default_save_day
+    self.save_day ||= Date.current
+  end
 end

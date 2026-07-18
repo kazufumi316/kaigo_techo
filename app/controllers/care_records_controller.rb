@@ -1,15 +1,15 @@
 class CareRecordsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_care_record_session, only: [ :create_select_care_user, :health_status, :appetite, :sleep_quality, :memo ]
-  before_action :set_save_care_record_session, only: [ :save_create_select_care_user, :save_health_status, :save_appetite, :save_sleep_quality ]
+  before_action :set_care_record_session, only: [ :create_select_care_user, :save_day, :health_status, :appetite, :sleep_quality, :memo ]
+  before_action :set_save_care_record_session, only: [ :save_create_select_care_user, :save_save_day, :save_health_status, :save_appetite, :save_sleep_quality ]
   before_action :set_care_record, only: [ :show, :edit, :update ]
 
   def create_select_care_user
     if current_user.families.count == 1
       family_ids = current_user.family_members.pluck(:family_id)
       @care_users = CareUser.where(family_id: family_ids)
-      session[:care_record_attributes] = { care_user_id: @care_users.first.id }
-      redirect_to health_status_care_records_path and return
+      session[:care_record_attributes][:care_user_id] = @care_users.first.id
+      redirect_to save_day_care_records_path and return
     elsif current_user.families.count > 1
       family_ids = current_user.family_members.pluck(:family_id)
       @care_users = CareUser.where(family_id: family_ids)
@@ -25,7 +25,14 @@ class CareRecordsController < ApplicationController
       redirect_to create_select_care_user_care_records_path, alert: "見守り家族を選択してください"
       return
     end
-    session[:care_record_attributes] = { care_user_id: care_user_id }
+    session[:care_record_attributes][:care_user_id] = care_user_id
+    redirect_to save_day_care_records_path
+  end
+
+  def save_day;end
+
+  def save_save_day
+    session[:care_record_attributes][:save_day] = params[:care_record][:save_day]
     redirect_to health_status_care_records_path
   end
 
@@ -154,7 +161,8 @@ class CareRecordsController < ApplicationController
       :appetite,
       :sleep_quality,
       :memo,
-      :care_user_id
+      :care_user_id,
+      :save_day
     )
   end
 

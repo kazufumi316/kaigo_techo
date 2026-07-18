@@ -59,6 +59,7 @@ RSpec.shared_context "介護記録作成" do
   before do
     visit homes_path
     click_on '記録をつける'
+    click_on '次へ'
     click_on '変わらない'
     click_on 'あり'
     click_on '少ない'
@@ -71,6 +72,7 @@ RSpec.shared_context "介護記録作成2人目" do
     visit homes_path
     click_on '記録をつける'
     click_on @dammy_name_2
+    click_on '次へ'
     click_on '変わらない'
     click_on 'あり'
     click_on '少ない'
