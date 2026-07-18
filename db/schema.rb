@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_16_104332) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_18_045103) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "care_record_reads", force: :cascade do |t|
+    t.bigint "care_record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "read_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["care_record_id", "user_id"], name: "index_care_record_reads_on_care_record_id_and_user_id", unique: true
+    t.index ["care_record_id"], name: "index_care_record_reads_on_care_record_id"
+    t.index ["user_id"], name: "index_care_record_reads_on_user_id"
+  end
 
   create_table "care_records", force: :cascade do |t|
     t.integer "appetite", null: false
@@ -74,6 +85,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_104332) do
     t.index ["tel_number"], name: "index_users_on_tel_number", unique: true
   end
 
+  add_foreign_key "care_record_reads", "care_records"
+  add_foreign_key "care_record_reads", "users"
   add_foreign_key "care_records", "care_users"
   add_foreign_key "care_records", "users"
   add_foreign_key "care_users", "families"
