@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <% if @current_family_member&.main? %>
+  <% if @current_family_member.present? %>
     <div class="w-full items-center max-w-md text-3xl text-gray-700">
       <div class="field mb-5">
         <p class="font-bold mb-1">招待コード : <%= @care_user.invite_code %></p>
