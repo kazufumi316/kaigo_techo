@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     resources :care_records, only: [ :index, :show, :destroy ]
   end
 
+  get "terms_of_service", to: "static_pages#terms_of_service"
+
   # Defines the root path route ("/")
   # root "articles#index"
   root "static_pages#top"
