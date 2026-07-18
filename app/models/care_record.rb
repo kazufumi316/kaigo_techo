@@ -1,4 +1,6 @@
 class CareRecord < ApplicationRecord
+  DAILY_RECORD_LIMIT = 10
+
   belongs_to :care_user
   belongs_to :user
   has_many :care_record_reads, dependent: :destroy
@@ -14,10 +16,18 @@ class CareRecord < ApplicationRecord
   validates :save_day, presence: true
 
   before_validation :set_default_save_day, on: :create
+  validate :daily_record_limit, on: :create
 
   private
 
   def set_default_save_day
     self.save_day ||= Date.current
+  end
+
+  def daily_record_limit
+    return if user_id.blank?
+
+    count = CareRecord.where(user_id: user_id, created_at: Date.current.all_day).count
+    errors.add(:base, "1日の記録件数の上限(#{DAILY_RECORD_LIMIT}件)に達しています") if count >= DAILY_RECORD_LIMIT
   end
 end
