@@ -19,7 +19,13 @@ class CareRecordsController < ApplicationController
   end
 
   def save_create_select_care_user
-    session[:care_record_attributes] = { care_user_id: params[:care_record][:care_user_id] }
+    family_ids = current_user.family_members.pluck(:family_id)
+    care_user_id = params[:care_record][:care_user_id]
+    unless CareUser.where(family_id: family_ids).exists?(id: care_user_id)
+      redirect_to create_select_care_user_care_records_path, alert: "見守り家族を選択してください"
+      return
+    end
+    session[:care_record_attributes] = { care_user_id: care_user_id }
     redirect_to health_status_care_records_path
   end
 
@@ -77,12 +83,15 @@ class CareRecordsController < ApplicationController
   end
 
   def index
-    @care_records = CareRecord.includes(:user, :care_user).order(created_at: :desc)
     family_ids = current_user.family_members.pluck(:family_id)
     @care_users = CareUser.where(family_id: family_ids)
     if params[:care_user_id].present?
-      @care_records = @care_records.where(care_user_id: params[:care_user_id])
-      @care_user = CareUser.find(params[:care_user_id])
+      unless @care_users.exists?(id: params[:care_user_id])
+        redirect_to view_select_care_user_care_records_path, alert: "見守り家族を選択してください"
+        return
+      end
+      @care_user = @care_users.find(params[:care_user_id])
+      @care_records = CareRecord.includes(:user, :care_user).where(care_user_id: @care_user.id).order(created_at: :desc)
     else
       @care_records = CareRecord.none
     end
@@ -106,7 +115,6 @@ class CareRecordsController < ApplicationController
   end
 
   def show
-    @care_record = CareRecord.find(params[:id])
     @care_user = @care_record.care_user
   end
 
@@ -156,6 +164,7 @@ class CareRecordsController < ApplicationController
   end
 
   def set_care_record
-    @care_record = CareRecord.find(params[:id])
+    family_ids = current_user.family_members.pluck(:family_id)
+    @care_record = CareRecord.joins(:care_user).where(care_users: { family_id: family_ids }).find(params[:id])
   end
 end
