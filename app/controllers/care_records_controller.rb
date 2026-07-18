@@ -116,6 +116,9 @@ class CareRecordsController < ApplicationController
 
   def show
     @care_user = @care_record.care_user
+    @care_record.care_record_reads.find_or_create_by!(user: current_user) do |read|
+      read.read_at = Time.current
+    end
   end
 
   def edit;end
