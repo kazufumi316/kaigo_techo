@@ -59,6 +59,7 @@ class CareRecordsController < ApplicationController
     final_params = session[:care_record_attributes].merge(care_record_params.to_h)
     @care_record = current_user.care_records.build(final_params)
     if @care_record.save
+      @care_record.care_record_reads.create!(user: current_user, read_at: Time.current)
       session.delete(:care_record_attributes)
       redirect_to homes_path, notice: "介護記録をつけました"
     else
