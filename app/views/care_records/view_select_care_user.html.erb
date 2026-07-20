@@ -6,7 +6,12 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
     <% if @care_users.present? %>
       <% @care_users.each do |care_user| %>
-        <%= link_to care_user.name, care_records_path(care_user_id: care_user.id), class: "w-75 flex justify-center items-center px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" %>
+        <%= link_to care_records_path(care_user_id: care_user.id), class: "w-75 flex flex-row justify-center items-center gap-2 px-10 py-6 text-3xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" do %>
+          <%= care_user.name %>
+          <% if @unread_care_user_ids.include?(care_user.id) %>
+            <span class="text-white text-xl">🔵</span>
+          <% end %>
+        <% end %>
       <% end %>
     <% else %>
       <div class="col-span-full text-center text-4xl mb-5 font-bold">見守り家族の登録は<br>ありません</div>
