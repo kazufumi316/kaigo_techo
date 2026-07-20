@@ -17,7 +17,7 @@
     <% if @reports.present? %>
       <% @reports.each do |care_record| %>
         <%= link_to care_record_path(care_record), class: "w-75 h-21 flex justify-center items-center px-10 py-6 text-2xl text-center text-white bg-orange-500 hover:bg-orange-300 font-bold rounded-lg" do %>
-          <%= care_record.save_day.strftime('%-d日') %>
+          <% if @unread_care_record_ids.include?(care_record.id) %>🔵 <% end %><%= care_record.save_day.strftime('%-d日') %>
           <% if care_record.memo.present? %>
             <br>
             <%= truncate(care_record.memo, length: 8) %>
