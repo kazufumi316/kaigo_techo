@@ -86,6 +86,8 @@ class CareRecordsController < ApplicationController
     elsif current_user.families.count > 1
       family_ids = current_user.family_members.pluck(:family_id)
       @care_users = CareUser.where(family_id: family_ids)
+      target_records = CareRecord.where(care_user_id: @care_users.pluck(:id)).where.not(user_id: current_user.id).where(created_at: 1.month.ago..)
+      @unread_care_user_ids = target_records.where.not(id: current_user.care_record_reads.pluck(:care_record_id)).distinct.pluck(:care_user_id)
     else
       @care_users = []
     end
