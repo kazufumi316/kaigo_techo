@@ -123,6 +123,7 @@ class CareRecordsController < ApplicationController
     @reports = @care_records.where(save_day: start_date..end_date).order(save_day: :asc)
     @prev_month = @target_date.prev_month
     @next_month = @target_date.next_month
+    @unread_care_record_ids = @reports.where.not(user_id: current_user.id).where.not(id: current_user.care_record_reads.pluck(:care_record_id)).pluck(:id)
   end
 
   def show
