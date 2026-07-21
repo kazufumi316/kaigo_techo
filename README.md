@@ -221,24 +221,34 @@
 - ログイン：メールアドレス、パスワード
 - 新規登録：アカウント作成(氏名、メールアドレス、電話番号、パスワード、パスワード確認)
 - ホーム画面：記録をつけるボタン、記録をみるボタン、見守り家族情報ボタン、アカウント情報ボタン、見守り家族登録ボタン、見守り家族追加ボタン、ログアウトボタン
+  - 未読の介護記録がある場合、通知バナーを表示
 - 記録をつけるページ：
   - 体調(良い・変わらない・悪い)
   - 食欲(ある・変わらない・ない)
   - 睡眠(多い、変わらない、少ない)
   - 特記事項
   - 各ページ戻るボタン設置
+  - 1日の記録作成件数に上限を設け、負担の偏りを防止
 - 記録をみるページ：記録作成日時での確認ができる
+  - 見守り家族が複数登録されている場合、見る対象を選択する画面を表示
   - 記録詳細ページ：体調、食欲、睡眠、特記事項を確認、戻るボタンを設置
     - 記録編集機能
     - 記録削除機能
+    - 記録ごとの既読者一覧表示
+  - 未読の記録・見守り家族には🔵マークを表示し、未読状況が一目でわかる
 - 見守り家族情報ページ：見守り家族情報表示
   - 見守り家族編集機能
-  - 見守り家族削除機能
+  - 見守り家族削除機能(主介護者権限のユーザーのみ実行可能)
 - アカウント情報ページ：アカウント情報表示
   - アカウント編集機能
   - アカウント削除機能
 - 見守り家族登録：要介護者の情報登録(氏名、生年月日、血液型、病気(大きな病気3個程度))
+  - 登録者は自動的に主介護者(main)として紐付け
 - 見守り家族追加：招待コードを入力することでアカウントとの紐付けを行う
+- 利用規約・プライバシーポリシー・お問い合わせページ
+- 管理者機能：ユーザー、見守り家族、介護記録の一覧・詳細確認・削除ができる管理画面
+  - 名前によるあいまい検索機能
+  - 管理者アカウントでログインした場合、自動的に管理画面へ遷移
 
 ### 本リリースで作る機能
 
@@ -291,7 +301,7 @@
   - RUNTEQで学んだ技術を活かせる
   - 認証、データベース操作で情報管理が行いやすい
   - メール通知機能が標準機能で備わっているため
-- フロントエンド：HTML TailwindCSS 4.2.x
+- フロントエンド：HTML TailwindCSS 4.4.x
   - シンプルなUIを作成するため
 - DB： PostgreSQL 18.2
   - Ruby on Railsとの相性が良いため
@@ -302,13 +312,27 @@
       - gem devise：新規登録、ログイン機能、ログアウト
       - gem devise-i18n：devise機能日本語化
   - (UI関連)
-    - gem i18n：日本語設定のため
+    - gem rails-i18n：日本語設定のため
+    - gem simple_calendar：記録一覧のカレンダー(月別)表示のため
+    - gem kaminari：一覧表示のページネーションのため
+    - gem wareki：日付の和暦表示のため
+  - (画面遷移・非同期処理)
+    - gem turbo-rails：ページ遷移の高速化のため
+    - gem stimulus-rails：未読通知バナーなどの簡易的なJS操作のため
+    - gem importmap-rails：JavaScriptのモジュール管理のため
+  - (メール送信)
+    - gem resend：体調不良時通知機能のため(本リリース時に実装予定)
   - (テスト駆動)
     - gem rspec-rails：Rspecテスト導入のため
     - gem factory-bot：RSpecテスト実行のため
     - gem selenium-webdriver：RSpecテスト実行のため
     - gem faker：factory-botでアカウントテスト作成のため
-    - gem letter_opener_web：パスワードリセット確認のため(本リリース時に実装予定)
+    - gem letter_opener_web：パスワードリセット確認のため
+    - gem capybara：システムテスト実行のため
+    - gem database_cleaner-active_record：テスト間のDB状態リセットのため
+    - gem rspec-retry：不安定な結合テストの再試行のため
+  - (開発補助)
+    - gem rubocop-rails-omakase：コードスタイル統一のため
 
 ### 10-2.キャッチアップ不足の懸念
 
@@ -327,7 +351,46 @@
 ---
 
 ### ER図
-[![Image from Gyazo](https://i.gyazo.com/949da0a5a6360e616607af6051f230b3.png)](https://gyazo.com/949da0a5a6360e616607af6051f230b3)
+
+```mermaid
+erDiagram
+    USERS ||--o{ FAMILY_MEMBERS : "所属"
+    FAMILIES ||--o{ FAMILY_MEMBERS : "所属"
+    FAMILIES ||--o{ CARE_USERS : "登録"
+    USERS ||--o{ CARE_RECORDS : "記録"
+    CARE_USERS ||--o{ CARE_RECORDS : "対象"
+    USERS ||--o{ CARE_RECORD_READS : "既読"
+    CARE_RECORDS ||--o{ CARE_RECORD_READS : "既読"
+
+    USERS {
+        string name
+        string email
+        string tel_number
+        integer role
+    }
+    FAMILIES {
+        string family_name
+    }
+    FAMILY_MEMBERS {
+        integer role
+    }
+    CARE_USERS {
+        string name
+        date birthday
+        integer blood_type
+        string invite_code
+    }
+    CARE_RECORDS {
+        integer health_status
+        integer appetite
+        integer sleep_quality
+        string memo
+        date save_day
+    }
+    CARE_RECORD_READS {
+        datetime read_at
+    }
+```
 
 ### テーブル詳細
 #### ：users
@@ -335,6 +398,7 @@
 - email : string / ログイン用メールアドレス(ユニーク制約)
 - tel_number : string / ログイン用電話番号(ユニーク制約) 本リリース実装予定
 - encrypted_password : string / ログイン用パスワード
+- role : integer / general(一般) admin(管理者)
 - created_at : timestamp / 作成日
 - updated_at : timestamp / 更新日
 
@@ -369,6 +433,13 @@
 - appetite : integer / 食欲(ある・変わらない・ない)
 - sleep_quality : integer / 睡眠(多い、変わらない、少ない)
 - memo : string / 特記事項(文字数制限 : 255)
+- created_at : timestamp / 作成日
+- updated_at : timestamp / 更新日
+
+#### ：care_record_reads(中間テーブル)
+- care_record_id : integer / FK1
+- user_id : integer / FK2
+- read_at : timestamp / 既読日時
 - created_at : timestamp / 作成日
 - updated_at : timestamp / 更新日
 
